@@ -39,3 +39,23 @@ $smokey:	#d4d4d4; //gray
 $header:                 'LeagueGothicRegular', Arial, Helvetica, sans-serif;
 $sans-serif:             'Trebuchet MS', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $sans-serif-small:       Arial, Helvetica, sans-serif;
+
+//mixins
+
+// CSS image replacement
+// -------------------------
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+@mixin hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+  text-indent:-9999px;
+  overflow:hidden;
+}
+
+@mixin background-opacity($color, $opacity: 0.3) {
+    background: $color; /* The Fallback */
+    background: rgba($color, $opacity);
+}
