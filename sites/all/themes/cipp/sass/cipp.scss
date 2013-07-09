@@ -1,0 +1,147 @@
+@import "base";
+@import "compass/css3";
+
+body,
+#page {
+	background:#fff;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: $header;
+	font-weight: normal;
+	letter-spacing:.75px;
+}
+h2.block-title {
+	font-size:2em;
+}
+.breadcrumb {
+    font-size: inherit;
+    color:$link; 
+    a {
+    	color:$link;
+    }
+}
+
+#zone-branding-wrapper {
+    background-color: #FFFFFF;
+    background-image: none;
+    color: $page;
+    height: 80px;
+    padding: 10px;
+}
+.branding-data {
+	line-height:85px;
+}
+
+.front .zone-preface-wrapper {
+	background-image: url("../images/homepage.jpg");
+	@include background-size(cover);
+	position:center center; 
+}
+.front .zone-preface-wrapper:after {
+    background-color: transparent;
+    background-image: none;
+    height: 0;
+}
+.context-blog .zone-preface-wrapper,
+.node-type-blog .zone-preface-wrapper {
+	background-image: url("../images/blog.jpg");
+	@include background-size(cover);
+	position:center center; 
+	height:105px;	
+}
+#zone-menu-wrapper {
+	@include rgba-background(rgba(0,0,0,0.75));
+	height:35px;
+	z-index:10;
+	padding:0;
+}
+#block-system-main-menu {
+    position: relative;
+    right: auto;
+    top: auto;
+    li a {
+    	line-height: 35px;
+    	padding: 0 10px;
+    }
+}
+.front #section-header {
+	z-index:5;
+}
+.front #section-content {
+	margin-top:-35px;
+	z-index:1;
+}
+#section-footer:after, #section-footer:before,
+#zone-menu-wrapper:after, #zone-menu-wrapper:before,
+.zone-postscript-wrapper:before, 
+.zone-postscript-wrapper:after, 
+.zone-preface-wrapper:before, 
+.zone-preface-wrapper:after {
+	border:none !important;
+	height:0;
+}
+#region-sidebar-second {
+	.block {
+		.block-inner {
+			padding:0;
+		}
+		.content {
+			padding:5px 10px;
+		}
+	}
+}
+
+// BLOCKS
+
+#block-block-1 {
+    background-color: white;
+    @include border-radius(3px);
+    @include box-shadow(0 0 3px rgba(0,0,0,0.3));
+    margin-top: 30px;
+    width: 460px;
+    .block-inner {
+    	padding: 20px 25px;
+    	a {
+    		float:right;
+    		font-weight:bold;
+    	}
+    }
+    h2.block-title {
+	    background: transparent;
+	    border: none;
+	    padding:7px 0;
+	}
+}
+#block-block-2 {
+	text-align:center;
+}
+#block-block-3 {
+	.content h2 {
+	    line-height: 105px;
+	    padding: 0 15px;
+	    color:#fff;
+	    font-size:3em;
+	    text-shadow:0 0 3px #746457;
+	}
+}
+
+#block-dkan-sitewide-demo-front-dkan-search-front {
+	bottom:auto;
+	top:75px;
+	.block-inner {
+		background: #fff;
+		color:$text;
+	}
+	h2.block-title {
+		font-size:2em;
+	}
+}
+
+// FOOTER
+
+#section-footer {
+    background-color: $smokey;
+    background-image: none;
+    color:$text;
+    text-align: center;
+}

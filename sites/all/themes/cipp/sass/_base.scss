@@ -1,0 +1,41 @@
+@import "rgbapng";
+@import url('fonts.css');
+
+// Legacy IE support
+//
+// These variables are used by many mixins to add additional CSS to support
+// specific versions of IE or specific vendor prefixes.
+//
+// To turn off support for IE6 or IE7, set those variables to false.
+//
+// AdaptiveTheme does not require special handling for IE8 or later. But Compass
+// defines more Legacy IE variables that you might find useful for your theme.
+// See the documentation at http://compass-style.org/reference/compass/support/
+//
+
+$legacy-support-for-ie6: true;
+$legacy-support-for-ie7: true;
+$legacy-support-for-ie8: true;
+$box-sizing-polyfill-path: "../scripts/boxsizing.htc";
+
+//
+// Partials to be shared with all .scss files.
+//
+
+@import 'compass/support';                     // Add Compass' IE and vendor prefix support variables.
+@import 'compass/utilities/general/clearfix';  // Better than Drupal's clearfix.
+@import 'compass/utilities/sprites';           // See http://compass-style.org/help/tutorials/spriting/
+@import 'compass/css3';                        // Use one CSS3 mixin instead of multiple vendor prefixes.
+
+
+// Color Variables
+$page:		#fff;
+$text:		#4D4D4D;
+$link:		#00578e; //blue
+$hover:		#31aae1; //bright blue
+$smokey:	#d4d4d4; //gray
+
+// Font Variables
+$header:                 'LeagueGothicRegular', Arial, Helvetica, sans-serif;
+$sans-serif:             'Trebuchet MS', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$sans-serif-small:       Arial, Helvetica, sans-serif;
