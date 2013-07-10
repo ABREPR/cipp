@@ -1,0 +1,16 @@
+name = CIPP blocks
+description = Site specific blocks
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = cipp_blocks
+dependencies[] = fe_block
+features[fe_block_boxes][] = blog_header
+features[fe_block_boxes][] = cipp_social
+features[fe_block_boxes][] = front_featured
+features[fe_block_boxes][] = front_help
+features[fe_block_settings][] = block-blog_header
+features[fe_block_settings][] = block-cipp_social
+features[fe_block_settings][] = block-front_featured
+features[fe_block_settings][] = block-front_help
+features[features_api][] = api:2

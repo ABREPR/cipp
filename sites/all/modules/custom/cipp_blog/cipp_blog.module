@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the CIPP blog feature.
+ */
+
+include_once 'cipp_blog.features.inc';
