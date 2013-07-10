@@ -25,7 +25,7 @@ h2.block-title {
     background-color: #FFFFFF;
     background-image: none;
     color: $page;
-    height: 80px;
+    height:80px;
     padding: 10px;
 }
 .branding-data {
@@ -135,7 +135,6 @@ h2.block-title {
     @include border-radius(3px);
     @include box-shadow(0 0 3px rgba(0,0,0,0.3));
     margin-top: 30px;
-    width: 460px;
     .block-inner {
     	padding: 20px 25px;
     	a {
@@ -344,6 +343,32 @@ h2.block-title {
 .responsive-layout-narrow #region-postscript-third h2.block-title {
 	font-size:120%;
 } 
+.container-12 .grid-12 {
+	min-width:auto; //override dkan
+}
+.responsive-layout-mobile {
+	#zone-branding-wrapper {
+		height:160px;
+	}
+	#region-branding #block-dkan-sitewide-dkan-sitewide-search-bar {
+		top:140px;
+	}
+	#block-lang-dropdown-language {
+		width:auto;
+		top:100px;
+		right:145px;
+		h2.block-title {
+			display:none;
+		}
+	}
+	#block-block-5 {
+		top:95px;
+	}
+	.logo-img {
+		float:none;
+		position:relative;
+	}
+}
 
 // VIEWS 
 

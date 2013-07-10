@@ -36,7 +36,7 @@ h2.block-title { font-size: 2em; }
 #block-system-main-menu li a:hover { background-color: #31aae1; text-decoration: none; }
 #block-system-main-menu li.first a { font-size: 22px; }
 
-#block-block-1 { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); margin-top: 30px; width: 460px; }
+#block-block-1 { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); margin-top: 30px; }
 #block-block-1 .block-inner { padding: 20px 25px; }
 #block-block-1 .block-inner a { float: right; font-weight: bold; }
 #block-block-1 h2.block-title { background: transparent; border: none; padding: 7px 0; }
@@ -90,6 +90,15 @@ h2.block-title { font-size: 2em; }
 #region-postscript-third a { display: block; text-align: right; font-weight: bold; }
 
 .responsive-layout-narrow #region-postscript-first h2.block-title, .responsive-layout-narrow #region-postscript-second h2.block-title, .responsive-layout-narrow #region-postscript-third h2.block-title { font-size: 120%; }
+
+.container-12 .grid-12 { min-width: auto; }
+
+.responsive-layout-mobile #zone-branding-wrapper { height: 160px; }
+.responsive-layout-mobile #region-branding #block-dkan-sitewide-dkan-sitewide-search-bar { top: 140px; }
+.responsive-layout-mobile #block-lang-dropdown-language { width: auto; top: 100px; right: 145px; }
+.responsive-layout-mobile #block-lang-dropdown-language h2.block-title { display: none; }
+.responsive-layout-mobile #block-block-5 { top: 95px; }
+.responsive-layout-mobile .logo-img { float: none; position: relative; }
 
 .views-field-title a { color: #4d4d4d; }
 
