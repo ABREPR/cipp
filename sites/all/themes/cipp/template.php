@@ -158,30 +158,7 @@ function cipp_cipp_tabs_local_task($variables) {
 function cipp_preprocess_node(&$vars) {
 }
 
-/**
- * Implements template_preprocess_page.
- */
-function cipp_preprocess_page(&$vars) {
-  $profile_path = drupal_get_path('profile', 'cipp');
-  // Add font-awesome. This is not a GPL library so has to be downloaded separately.
-  if (file_exists($profile_path . '/libraries/font_awesome/css/font-awesome.css')) {
-    drupal_add_css($profile_path . '/libraries/font_awesome/css/font-awesome.css');
-  }
-  if ($vars['is_front']) {
-    drupal_add_js($profile_path . '/themes/cipp/js/front.js');
-  }
-  // Remove title on dataset edit and creation pages.
-  $vars['title'] = '';
-}
 
-/**
- * Implments template_preprocess_block().
- * TODO: Move this to cipp_dataset module.
- */
-function cipp_preprocess_block(&$vars) {
-
-  $vars['title'] = '';
-}
 
 /**
  * Implements theme_horizontal_tabs().

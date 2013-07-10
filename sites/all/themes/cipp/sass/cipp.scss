@@ -68,6 +68,12 @@ h2.block-title {
 	background:transparent;
 }
 
+#zone-postscript .block, #zone-content .block {
+    background-color: white;
+    border:none;
+    @include box-shadow(none);
+}
+
 #region-sidebar-second {
 	.block {
 		.block-inner {
@@ -156,7 +162,7 @@ h2.block-title {
 	    line-height: 105px;
 	    padding: 0 15px;
 	    color:#fff;
-	    font-size:3em;
+	    font-size:60px;
 	    text-shadow:0 0 3px #746457;
 	}
 }
@@ -269,7 +275,7 @@ h2.block-title {
   		top:0;
   		right:0;
   		height:24px;
-  		width:28px;
+  		width:32px;
   		border:1px solid #ccc;
     }
 }
@@ -342,7 +348,14 @@ h2.block-title {
 .responsive-layout-narrow #region-postscript-second h2.block-title,
 .responsive-layout-narrow #region-postscript-third h2.block-title {
 	font-size:120%;
+}
+
+.context-blog #zone-preface.container-12 {
+	#region-preface-first.grid-6 {
+		width:100%;
+	}
 } 
+
 .container-12 .grid-12 {
 	min-width:auto; //override dkan
 }
@@ -375,6 +388,56 @@ h2.block-title {
 .views-field-title {
 	a {
 		color:$text;
+	}
+}
+
+.views-view-grid {
+	td {
+		text-align:center;
+		vertical-align:bottom;
+		a:link,
+		a:visited {
+			color:$link;
+			font-weight:bold;
+		}
+		a:hover {
+			color:$hover;
+		}
+		.views-field-name,
+		.views-field-title {
+			margin:10px 0 0 0;
+			display:block;
+		}
+	}
+	tr:hover td,
+	tr.even:hover td.active,
+	tr.odd:hover td.active {
+		background: #fff; //override omega
+	}
+}
+
+
+
+// MODULE SPECIFIC
+
+.horizontal-tabs ul.horizontal-tabs-list {
+	border:none;
+}
+#block-views-group-block-block img {
+    border: none;
+    margin: 0 auto;
+    width: auto;
+}
+.view-group-block .view-content {
+	text-align:center;
+}
+.service-links {
+	.service-label {
+		display:none;
+	}
+	ul {
+		margin:1em 0;
+		padding:0;
 	}
 }
 

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the CIPP groups feature.
+ */
+
+include_once 'cipp_groups.features.inc';
