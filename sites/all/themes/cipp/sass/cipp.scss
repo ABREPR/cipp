@@ -93,44 +93,61 @@ h2.block-title {
 	z-index:10;
 	padding:0;
 }
-#block-system-main-menu {
-    position: relative;
-    right: auto;
-    top: auto;
-    li {
-    	width:20%;
-    	height:35px;
-    	margin:0;
-    	padding:0;
-    	float:left;
-    	list-style:none;
-    	a {
-	    	line-height: 35px;
-	    	padding: 0;
-	    	text-align:center;
-	    	font-family: $header;
-	    	font-size:18px;
-	    	font-weight:normal;
-	    	text-transform:uppercase;
-	    	letter-spacing:1px;
-	    	width:100%;
-	    	display:block;
-	    }
-		a.active,
-		a.active:hover {
-    		@include border-radius(0);
-    		@include box-shadow(none);
-    		background-color:rgba(255, 255, 255, 0.15);
-    	}
-    	a:hover {
-    		background-color:$hover;
-    		text-decoration:none;
-    	}
-    }
-    li.first {
-		a {
-			font-size:22px;
+#block-superfish-1 {
+	ul#superfish-1 {
+		width:100%;
+		margin:0;
+		li {
+			width:19.5%;
+			background:transparent;
+			margin:0;
+			a {
+				line-height: 35px;
+		    	padding: 0;
+		    	text-align:center;
+		    	font-family: $header;
+		    	font-size:18px;
+		    	font-weight:normal;
+		    	text-transform:uppercase;
+		    	letter-spacing:1px;
+		    	width:100%;
+		    	display:block;
+		    	border:none;
+		    }
+			a.active,
+			a.active:hover {
+	    		@include border-radius(0);
+	    		@include box-shadow(none);
+	    		background-color:rgba(255, 255, 255, 0.25);
+	    	}
+	    	a:hover {
+	    		background-color:$hover;
+	    		text-decoration:none;
+	    	}
+		    &.first {
+				a.sf-depth-1 {
+					font-size:22px;
+				}
+			}
+			ul {
+				width:100%; //second level
+				@include rgba-background(rgba(0,0,0,0.75));
+				li, a {
+					width:100%;
+				}
+			}
 		}
+	}
+}
+#superfish-1-select {
+	background: #000;
+	border:none;
+	color:#fff;
+	height:32px;
+	margin:0 auto;
+	display:block;
+	option {
+		padding:2px;
 	}
 }
 
@@ -183,22 +200,24 @@ h2.block-title {
 		display:inline-block;
 		margin:0 0 0 10px;
 		padding:0;
-		background-image: url(../images/social-media.png);
 		background-repeat:none;
 		&.facebook {
 			background-position:0 0;
+			background-image: url(../images/social-media.png);
 			&:hover {
 				background-position:0 -42px;
 			}
 		}
 		&.twitter {
 			background-position:-42px 0;
+			background-image: url(../images/social-media.png);
 			&:hover {
 				background-position: -42px -42px;
 			}
 		}
 		&.google {
 			background-position:-84px 0;
+			background-image: url(../images/social-media.png);
 			&:hover {
 				background-position: -84px -42px;
 			}
