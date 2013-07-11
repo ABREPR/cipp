@@ -23,18 +23,7 @@ function cipp_groups_context_default_contexts() {
       ),
     ),
   );
-  $context->reactions = array(
-    'block' => array(
-      'blocks' => array(
-        'views-socioeconomic_terms-block' => array(
-          'module' => 'views',
-          'delta' => 'socioeconomic_terms-block',
-          'region' => 'content',
-          'weight' => '9',
-        ),
-      ),
-    ),
-  );
+  $context->reactions = array();
   $context->condition_mode = 0;
 
   // Translatables

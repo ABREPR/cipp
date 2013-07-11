@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the CIPP taxonomy feature.
- */
-
-include_once 'cipp_taxonomy.features.inc';

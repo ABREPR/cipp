@@ -31,16 +31,19 @@ function cipp_groups_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'grid';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_group_type',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['columns'] = '6';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['inline'] = array(
     'title' => 'title',
   );
-  /* Header: Global: Text area */
-  $handler->display->display_options['header']['area']['id'] = 'area';
-  $handler->display->display_options['header']['area']['table'] = 'views';
-  $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = '<h2>Government</h2>';
-  $handler->display->display_options['header']['area']['format'] = 'html';
   /* Field: Content: Image */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
@@ -59,6 +62,13 @@ function cipp_groups_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Group Type */
+  $handler->display->display_options['fields']['field_group_type']['id'] = 'field_group_type';
+  $handler->display->display_options['fields']['field_group_type']['table'] = 'field_data_field_group_type';
+  $handler->display->display_options['fields']['field_group_type']['field'] = 'field_group_type';
+  $handler->display->display_options['fields']['field_group_type']['label'] = '';
+  $handler->display->display_options['fields']['field_group_type']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_group_type']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -96,7 +106,6 @@ function cipp_groups_views_default_views() {
     t('Sort by'),
     t('Asc'),
     t('Desc'),
-    t('<h2>Government</h2>'),
     t('Page'),
   );
   $export['cipp_groups'] = $view;
