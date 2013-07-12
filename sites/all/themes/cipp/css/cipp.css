@@ -33,11 +33,14 @@ h2.block-title { font-size: 2em; }
 
 #block-superfish-1 ul#superfish-1 { width: 100%; margin: 0; }
 #block-superfish-1 ul#superfish-1 li { width: 19.5%; background: transparent; margin: 0; }
-#block-superfish-1 ul#superfish-1 li a { line-height: 35px; padding: 0; text-align: center; font-family: "LeagueGothicRegular", Arial, Helvetica, sans-serif; font-size: 18px; font-weight: normal; text-transform: uppercase; letter-spacing: 1px; width: 100%; display: block; border: none; }
+#block-superfish-1 ul#superfish-1 li a { padding: 6px 6px 5px; text-align: center; font-family: "LeagueGothicRegular", Arial, Helvetica, sans-serif; font-size: 18px; font-weight: normal; text-transform: uppercase; letter-spacing: 1px; width: 100%; display: block; border: none; }
+#block-superfish-1 ul#superfish-1 li .sf-depth-1 { height: 35px; }
+#block-superfish-1 ul#superfish-1 li a.sf-depth-1 { line-height: 35px; padding: 0; }
 #block-superfish-1 ul#superfish-1 li a.active, #block-superfish-1 ul#superfish-1 li a.active:hover { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; background-color: rgba(255, 255, 255, 0.25); }
 #block-superfish-1 ul#superfish-1 li a:hover { background-color: #31aae1; text-decoration: none; }
 #block-superfish-1 ul#superfish-1 li.first a.sf-depth-1 { font-size: 22px; }
-#block-superfish-1 ul#superfish-1 li ul { width: 100%; background: url('/images/rgbapng/000000bf-5.png?1373336579'); background: rgba(0, 0, 0, 0.75); }
+#block-superfish-1 ul#superfish-1 li.first a .sf-sub-indicator { top: .6em; }
+#block-superfish-1 ul#superfish-1 li ul { background: url('/images/rgbapng/000000bf-5.png?1373336579'); background: rgba(0, 0, 0, 0.75); }
 #block-superfish-1 ul#superfish-1 li ul li, #block-superfish-1 ul#superfish-1 li ul a { width: 100%; }
 
 #superfish-1-select { background: #000; border: none; color: #fff; height: 32px; margin: 0 auto; display: block; }

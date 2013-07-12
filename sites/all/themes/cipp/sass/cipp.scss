@@ -103,8 +103,7 @@ h2.block-title {
 			background:transparent;
 			margin:0;
 			a {
-				line-height: 35px;
-		    	padding: 0;
+		    	padding: 6px 6px 5px;
 		    	text-align:center;
 		    	font-family: $header;
 		    	font-size:18px;
@@ -114,6 +113,13 @@ h2.block-title {
 		    	width:100%;
 		    	display:block;
 		    	border:none;
+		    }
+		    .sf-depth-1 {
+		    	height:35px;
+		    }
+		    a.sf-depth-1 {
+		    	line-height:35px;
+		    	padding:0;
 		    }
 			a.active,
 			a.active:hover {
@@ -129,9 +135,12 @@ h2.block-title {
 				a.sf-depth-1 {
 					font-size:22px;
 				}
+				a .sf-sub-indicator {
+					top:.6em;
+				}
 			}
 			ul {
-				width:100%; //second level
+				//width:100%; //second level
 				@include rgba-background(rgba(0,0,0,0.75));
 				li, a {
 					width:100%;
@@ -140,6 +149,9 @@ h2.block-title {
 		}
 	}
 }
+
+
+//mobile menu
 #superfish-1-select {
 	background: #000;
 	border:none;
