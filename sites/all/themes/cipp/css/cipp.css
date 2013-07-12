@@ -8,7 +8,7 @@ h2.block-title { font-size: 2em; }
 .breadcrumb { font-size: inherit; color: #00578e; }
 .breadcrumb a { color: #00578e; }
 
-#zone-branding-wrapper { background-color: #FFFFFF; background-image: none; color: white; height: 80px; padding: 10px; }
+#zone-branding-wrapper { background-color: #FFFFFF; background-image: none; color: white; height: 80px; padding: 10px; filter: none; }
 
 .branding-data { line-height: 85px; }
 
@@ -46,7 +46,7 @@ h2.block-title { font-size: 2em; }
 #block-block-1 { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); margin-top: 30px; }
 #block-block-1 .block-inner { padding: 20px 25px; }
 #block-block-1 .block-inner a { float: right; font-weight: bold; }
-#block-block-1 h2.block-title { background: transparent; border: none; padding: 7px 0; }
+#block-block-1 h2.block-title { background: transparent; border: none; padding: 7px 0; filter: none; }
 
 #block-block-2 { text-align: center; }
 
@@ -66,7 +66,7 @@ h2.block-title { font-size: 2em; }
 #section-header .dd_after .ddChild a.selected, #section-header .dd_after .ddChild a:hover { background: #31aae1; /* The Fallback */ background: rgba(49, 170, 225, 0.85); color: #000; }
 
 #block-lang-dropdown-language { position: absolute; top: 15px; right: 150px; width: 320px; color: #4d4d4d; }
-#block-lang-dropdown-language h2.block-title { font-size: 1em; font-weight: normal; font-family: "Trebuchet MS", "Helvetica Neue", Arial, Helvetica, sans-serif; background: transparent; border: none; float: right; padding: 4px 150px 0 0; letter-spacing: 0; }
+#block-lang-dropdown-language h2.block-title { font-size: 1em; font-weight: normal; font-family: "Trebuchet MS", "Helvetica Neue", Arial, Helvetica, sans-serif; background: transparent; border: none; float: right; padding: 4px 150px 0 0; letter-spacing: 0; filter: none; }
 #block-lang-dropdown-language form { position: absolute; right: 0; top: 0; color: #4d4d4d; margin: 0; }
 #block-lang-dropdown-language form .form-item, #block-lang-dropdown-language form .form-actions { margin: 0; }
 #block-lang-dropdown-language form select, #block-lang-dropdown-language form option { color: #000; }
@@ -81,10 +81,10 @@ h2.block-title { font-size: 2em; }
 
 #block-dkan-sitewide-demo-front-dkan-search-front { bottom: auto; top: 75px; }
 #block-dkan-sitewide-demo-front-dkan-search-front .block-inner { background: #fff; color: #4d4d4d; }
-#block-dkan-sitewide-demo-front-dkan-search-front h2.block-title { font-size: 2em; }
+#block-dkan-sitewide-demo-front-dkan-search-front h2.block-title { font-size: 2em; filter: none; }
 
 #zone-postscript .block, #zone-postscript .view-content, #zone-postscript .view { background-color: white; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; box-shadow: none; margin-bottom: 20px; background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; }
-#zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 60px; height: 70px; line-height: 70px; margin: 0 0 10px; }
+#zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 60px; height: 70px; line-height: 70px; margin: 0 0 10px; filter: none; }
 
 #region-postscript-first .region-inner { padding: 0 15px; }
 #region-postscript-first h2.block-title { background: transparent url(../images/new-datasets.png) no-repeat 0 50%; }
@@ -126,4 +126,4 @@ h2.block-title { font-size: 2em; }
 .service-links .service-label { display: none; }
 .service-links ul { margin: 1em 0; padding: 0; }
 
-#section-footer { background-color: #d4d4d4; background-image: none; color: #4d4d4d; text-align: center; margin-top: 1.5em; }
+#section-footer { background-color: #d4d4d4; background-image: none; color: #4d4d4d; text-align: center; margin-top: 1.5em; filter: none; }

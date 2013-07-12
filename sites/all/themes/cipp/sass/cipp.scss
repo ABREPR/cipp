@@ -27,6 +27,7 @@ h2.block-title {
     color: $page;
     height:80px;
     padding: 10px;
+    filter: none; //override ie setting from dkan
 }
 .branding-data {
 	line-height:85px;
@@ -169,6 +170,7 @@ h2.block-title {
 	    background: transparent;
 	    border: none;
 	    padding:7px 0;
+	    filter: none; //override ie setting from dkan
 	}
 }
 #block-block-2 {
@@ -250,6 +252,7 @@ h2.block-title {
 		float:right;
 		padding:4px 150px 0 0;
 		letter-spacing:0;
+		filter: none; //override ie setting from dkan
 	}
 	form {
 		position:absolute;
@@ -308,6 +311,7 @@ h2.block-title {
 	}
 	h2.block-title {
 		font-size:2em;
+		filter: none; //override ie setting from dkan
 	}
 }
 
@@ -331,6 +335,7 @@ h2.block-title {
 		height:70px;
 		line-height:70px;
 		margin:0 0 10px;
+		filter: none; //override ie setting from dkan
 	}
 }
 
@@ -468,4 +473,5 @@ h2.block-title {
     color:$text;
     text-align: center;
     margin-top:1.5em;
+    filter: none; //override ie setting from dkan
 }
