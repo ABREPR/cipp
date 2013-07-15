@@ -105,7 +105,7 @@ function dkan_sitewide_license_block() {
   }
   else {
     if (isset($node->field_license) && $node->field_license) {
-      $key = $node->field_license[$node->language][0];
+      $key = $node->field_license['und'][0];
       $field = field_info_instance('node', 'field_license', 'dataset');
       $raw_options = $field['widget']['settings']['available_options'];
       foreach (explode("\n", $raw_options) as $option) {
