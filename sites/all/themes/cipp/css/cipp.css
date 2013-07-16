@@ -86,20 +86,18 @@ h2.block-title { font-size: 2em; }
 #block-dkan-sitewide-demo-front-dkan-search-front .block-inner { background: #fff; color: #4d4d4d; }
 #block-dkan-sitewide-demo-front-dkan-search-front h2.block-title { font-size: 2em; filter: none; }
 
-#zone-postscript .block, #zone-postscript .view-content, #zone-postscript .view { background-color: white; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; box-shadow: none; margin-bottom: 20px; background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; }
-#zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 60px; height: 70px; line-height: 70px; margin: 0 0 10px; filter: none; }
+.front #zone-postscript .block, .front #zone-postscript .view-content, .front #zone-postscript .view { background-color: white; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; box-shadow: none; margin-bottom: 20px; background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; }
+.front #zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 60px; height: 70px; line-height: 70px; margin: 0 0 10px; filter: none; }
 
-#region-postscript-first .region-inner { padding: 0 15px; }
-#region-postscript-first h2.block-title { background: transparent url(../images/new-datasets.png) no-repeat 0 50%; }
+.front #region-postscript-first .region-inner { padding: 0 15px; }
+.front #region-postscript-first h2.block-title { background: transparent url(../images/new-datasets.png) no-repeat 0 50%; }
+.front #region-postscript-second .region-inner { padding: 0 15px; }
+.front #region-postscript-second h2.block-title { background: transparent url(../images/featured-viz.png) no-repeat 0 50%; }
+.front #region-postscript-third .region-inner { padding: 0 15px; }
+.front #region-postscript-third h2.block-title { background: transparent url(../images/help-improve-opr.png) no-repeat 0 50%; }
+.front #region-postscript-third a { display: block; text-align: right; font-weight: bold; }
 
-#region-postscript-second .region-inner { padding: 0 15px; }
-#region-postscript-second h2.block-title { background: transparent url(../images/featured-viz.png) no-repeat 0 50%; }
-
-#region-postscript-third .region-inner { padding: 0 15px; }
-#region-postscript-third h2.block-title { background: transparent url(../images/help-improve-opr.png) no-repeat 0 50%; }
-#region-postscript-third a { display: block; text-align: right; font-weight: bold; }
-
-.responsive-layout-narrow #region-postscript-first h2.block-title, .responsive-layout-narrow #region-postscript-second h2.block-title, .responsive-layout-narrow #region-postscript-third h2.block-title { font-size: 120%; }
+.front .responsive-layout-narrow #region-postscript-first h2.block-title, .front .responsive-layout-narrow #region-postscript-second h2.block-title, .front .responsive-layout-narrow #region-postscript-third h2.block-title { font-size: 120%; }
 
 .context-blog #zone-preface.container-12 #region-preface-first.grid-6 { width: 100%; }
 
@@ -120,6 +118,10 @@ h2.block-title { font-size: 2em; }
 .views-view-grid td .views-field-name, .views-view-grid td .views-field-title { margin: 10px 0 0 0; display: block; }
 .views-view-grid tr:hover td, .views-view-grid tr.even:hover td.active, .views-view-grid tr.odd:hover td.active { background: #fff; }
 
+#field-tags-wrapper .path-form label, #edit-path label, .form-item-field-tags-und label, #edit-field-format label, #edit-field-tags-und label { width: auto; text-align: left; }
+
+.form-item-field-tags-und label { margin-top: 5px; }
+
 .horizontal-tabs ul.horizontal-tabs-list { border: none; }
 
 #block-views-group-block-block img { border: none; margin: 0 auto; width: auto; }
@@ -128,5 +130,16 @@ h2.block-title { font-size: 2em; }
 
 .service-links .service-label { display: none; }
 .service-links ul { margin: 1em 0; padding: 0; }
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input { background-color: #FFFFFF; border: 1px solid #CCCCCC; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s; }
+
+textarea:focus, input:focus { border-color: #31aae1; }
+
+.page-node-add .form-item-title .description, .page-node-edit .form-item-title .description { font-size: .9em; left: auto; top: auto; }
+.page-node-add #dataset-node-form .form-item-title .description, .page-node-add #resource-node-form .form-item-title .description, .page-node-edit #dataset-node-form .form-item-title .description, .page-node-edit #resource-node-form .form-item-title .description { font-size: 18px; left: 145px; top: 15px; }
+.page-node-add #dataset-node-form .form-item-field-tags-und label, .page-node-add #resource-node-form .form-item-field-tags-und label, .page-node-edit #dataset-node-form .form-item-field-tags-und label, .page-node-edit #resource-node-form .form-item-field-tags-und label { margin-top: 10px; }
+.page-node-add #dataset-node-form #edit-field-tags label, .page-node-add #resource-node-form #edit-field-tags label, .page-node-edit #dataset-node-form #edit-field-tags label, .page-node-edit #resource-node-form #edit-field-tags label { width: 120px; text-align: right; }
+.page-node-add #dataset-node-form .field-name-field-license label, .page-node-add #resource-node-form .field-name-field-license label, .page-node-edit #dataset-node-form .field-name-field-license label, .page-node-edit #resource-node-form .field-name-field-license label { margin-top: 15px; }
+.page-node-add #dataset-node-form .chzn-disabled input, .page-node-add #resource-node-form .chzn-disabled input, .page-node-edit #dataset-node-form .chzn-disabled input, .page-node-edit #resource-node-form .chzn-disabled input { padding: 0; font-size: 1em; }
 
 #section-footer { background-color: #d4d4d4; background-image: none; color: #4d4d4d; text-align: center; margin-top: 1.5em; filter: none; }

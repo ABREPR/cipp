@@ -327,63 +327,68 @@ h2.block-title {
 	}
 }
 
-#zone-postscript {
-	.block,
-	.view-content,
-	.view {
-	    background-color: white;
-	    @include border-radius(0);
-	    box-shadow: none;
-	    margin-bottom: 20px;
-	    background-image:none;
-	    @include box-shadow(none);
-	    border:none;
-	}
-	h2.block-title {
-		background:none;
-		border:none;
-		border-bottom: 1px solid #ccc;
-		padding-left:60px;
-		height:70px;
-		line-height:70px;
-		margin:0 0 10px;
-		filter: none; //override ie setting from dkan
-	}
-}
-
-#region-postscript-first {
-	.region-inner {
-		padding:0 15px;
-	}
-	h2.block-title {
-		background:transparent url(../images/new-datasets.png) no-repeat 0 50%;
+.front {
+	#zone-postscript {
+		.block,
+		.view-content,
+		.view {
+		    background-color: white;
+		    @include border-radius(0);
+		    box-shadow: none;
+		    margin-bottom: 20px;
+		    background-image:none;
+		    @include box-shadow(none);
+		    border:none;
+		}
+		h2.block-title {
+			background:none;
+			border:none;
+			border-bottom: 1px solid #ccc;
+			padding-left:60px;
+			height:70px;
+			line-height:70px;
+			margin:0 0 10px;
+			filter: none; //override ie setting from dkan
+		}
 	}
 }
-#region-postscript-second {
-	.region-inner {
-		padding:0 15px;
+.front {
+	#region-postscript-first {
+		.region-inner {
+			padding:0 15px;
+		}
+		h2.block-title {
+			background:transparent url(../images/new-datasets.png) no-repeat 0 50%;
+		}
 	}
-	h2.block-title {
-		background:transparent url(../images/featured-viz.png) no-repeat 0 50%;
+	#region-postscript-second {
+		.region-inner {
+			padding:0 15px;
+		}
+		h2.block-title {
+			background:transparent url(../images/featured-viz.png) no-repeat 0 50%;
+		}
+	}
+	#region-postscript-third {
+		.region-inner {
+			padding:0 15px;
+		}
+		h2.block-title {
+			background:transparent url(../images/help-improve-opr.png) no-repeat 0 50%;
+		}
+		a {
+			display:block;
+			text-align:right;
+			font-weight:bold;
+		}
 	}
 }
-#region-postscript-third {
-	.region-inner {
-		padding:0 15px;
+.front {
+	.responsive-layout-narrow #region-postscript-first h2.block-title,
+	.responsive-layout-narrow #region-postscript-second h2.block-title,
+	.responsive-layout-narrow #region-postscript-third h2.block-title {
+		font-size:120%;
 	}
-	h2.block-title {
-		background:transparent url(../images/help-improve-opr.png) no-repeat 0 50%;
-	}
-	a {
-		display:block;
-		text-align:right;
-		font-weight:bold;
-	}
-}
-.responsive-layout-narrow #region-postscript-first h2.block-title,
-.responsive-layout-narrow #region-postscript-second h2.block-title,
-.responsive-layout-narrow #region-postscript-third h2.block-title {
-	font-size:120%;
 }
 
 .context-blog #zone-preface.container-12 {
@@ -452,7 +457,20 @@ h2.block-title {
 	}
 }
 
+// NODES
 
+#field-tags-wrapper .path-form label,
+#edit-path label,
+.form-item-field-tags-und label,
+#edit-field-format label,
+#edit-field-tags-und label {
+  width: auto;
+  text-align: left;
+}
+
+.form-item-field-tags-und label {
+	margin-top:5px;
+}
 
 // MODULE SPECIFIC
 
@@ -476,6 +494,66 @@ h2.block-title {
 		padding:0;
 	}
 }
+
+// FORMS
+
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"], 
+.uneditable-input {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    @include box-shadow(0 1px 1px rgba(0, 0, 0, 0.075) inset);
+    @include border-radius(3px);
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+textarea:focus, input:focus {
+	border-color:$hover;
+}
+
+.page-node-add,
+.page-node-edit {
+	.form-item-title .description {
+		    font-size: .9em;
+		    left: auto;
+		    top: auto;
+	}
+	#dataset-node-form,
+	#resource-node-form {
+		.form-item-title .description {
+		    font-size: 18px;
+		    left: 145px;
+		    top: 15px;
+		}
+		.form-item-field-tags-und label {
+			margin-top:10px;
+		}
+		#edit-field-tags label {
+			width:120px;
+			text-align:right;
+		}
+		.field-name-field-license label {
+			margin-top:15px;
+		} 
+		.chzn-disabled input {
+			padding:0;
+			font-size:1em;
+		}
+	}
+}
+
 
 // FOOTER
 
