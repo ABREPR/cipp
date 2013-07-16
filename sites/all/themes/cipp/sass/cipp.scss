@@ -552,6 +552,20 @@ textarea:focus, input:focus {
 			font-size:1em;
 		}
 	}
+	#blog-node-form {
+		#edit-field-tags {
+			padding-bottom:20px;
+			.form-item-field-tags-und .description {
+			    font-size: 0.85em !important;
+			    left: 50px;
+			    top: 26px;
+			    color: #6A6A6A;
+			}
+		}
+		input.form-autocomplete {
+			background-position: 99% 5px;
+		}
+	}
 }
 
 

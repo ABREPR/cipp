@@ -141,5 +141,8 @@ textarea:focus, input:focus { border-color: #31aae1; }
 .page-node-add #dataset-node-form #edit-field-tags label, .page-node-add #resource-node-form #edit-field-tags label, .page-node-edit #dataset-node-form #edit-field-tags label, .page-node-edit #resource-node-form #edit-field-tags label { width: 120px; text-align: right; }
 .page-node-add #dataset-node-form .field-name-field-license label, .page-node-add #resource-node-form .field-name-field-license label, .page-node-edit #dataset-node-form .field-name-field-license label, .page-node-edit #resource-node-form .field-name-field-license label { margin-top: 15px; }
 .page-node-add #dataset-node-form .chzn-disabled input, .page-node-add #resource-node-form .chzn-disabled input, .page-node-edit #dataset-node-form .chzn-disabled input, .page-node-edit #resource-node-form .chzn-disabled input { padding: 0; font-size: 1em; }
+.page-node-add #blog-node-form #edit-field-tags, .page-node-edit #blog-node-form #edit-field-tags { padding-bottom: 20px; }
+.page-node-add #blog-node-form #edit-field-tags .form-item-field-tags-und .description, .page-node-edit #blog-node-form #edit-field-tags .form-item-field-tags-und .description { font-size: 0.85em !important; left: 50px; top: 26px; color: #6A6A6A; }
+.page-node-add #blog-node-form input.form-autocomplete, .page-node-edit #blog-node-form input.form-autocomplete { background-position: 99% 5px; }
 
 #section-footer { background-color: #d4d4d4; background-image: none; color: #4d4d4d; text-align: center; margin-top: 1.5em; filter: none; }
