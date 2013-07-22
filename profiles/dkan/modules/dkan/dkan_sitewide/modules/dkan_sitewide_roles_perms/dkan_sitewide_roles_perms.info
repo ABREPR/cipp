@@ -49,11 +49,3 @@ features[variable][] = user_picture_guidelines
 features[variable][] = user_picture_path
 features[variable][] = user_picture_style
 features[variable][] = user_pictures
-
-
-; Information added by drush on 2013-06-30
-version = "7.x-1.x-dev"
-core = "7.x"
-project = "dkan"
-datestamp = "1372647812"
-

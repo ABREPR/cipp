@@ -36,11 +36,3 @@ features[features_api][] = api:1
 features[search_api_index][] = datasets
 features[search_api_server][] = datasets
 features[views_view][] = dataset
-
-
-; Information added by drush on 2013-06-30
-version = "7.x-1.x-dev"
-core = "7.x"
-project = "dkan"
-datestamp = "1372647812"
-

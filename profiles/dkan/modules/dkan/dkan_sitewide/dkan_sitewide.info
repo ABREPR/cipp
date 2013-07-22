@@ -26,11 +26,3 @@ features[variable][] = node_options_page
 features[variable][] = node_preview_page
 features[variable][] = node_submitted_page
 features[variable][] = pathauto_node_pattern
-
-
-; Information added by drush on 2013-06-30
-version = "7.x-1.x-dev"
-core = "7.x"
-project = "dkan"
-datestamp = "1372647812"
-

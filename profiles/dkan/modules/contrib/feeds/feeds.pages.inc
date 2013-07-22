@@ -135,7 +135,6 @@ function feeds_import_tab_form($form, &$form_state, $node) {
         '#tree' => TRUE,
         '#value' => feeds_source_status($source),
       );
-      dpm($source->importer->id);
       $progress = $source->progressImporting();
       $total_progress += $progress;
     }
