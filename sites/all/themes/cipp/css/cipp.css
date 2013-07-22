@@ -29,7 +29,7 @@ h2.block-title { font-size: 2em; }
 #region-sidebar-second .block .block-inner { padding: 0; }
 #region-sidebar-second .block .content { padding: 5px 10px; }
 
-#zone-menu-wrapper { background: url('/images/rgbapng/000000bf-5.png?1373336579'); background: rgba(0, 0, 0, 0.75); height: 35px; z-index: 10; padding: 0; }
+#zone-menu-wrapper { background: url('/images/rgbapng/000000bf-5.png?1373905306'); background: rgba(0, 0, 0, 0.75); height: 35px; z-index: 10; padding: 0; }
 
 #block-superfish-1 ul#superfish-1 { width: 100%; margin: 0; }
 #block-superfish-1 ul#superfish-1 li { width: 19.5%; background: transparent; margin: 0; }
@@ -40,7 +40,7 @@ h2.block-title { font-size: 2em; }
 #block-superfish-1 ul#superfish-1 li a:hover { background-color: #31aae1; text-decoration: none; }
 #block-superfish-1 ul#superfish-1 li.first a.sf-depth-1 { font-size: 22px; }
 #block-superfish-1 ul#superfish-1 li.first a .sf-sub-indicator { top: .6em; }
-#block-superfish-1 ul#superfish-1 li ul { background: url('/images/rgbapng/000000bf-5.png?1373336579'); background: rgba(0, 0, 0, 0.75); }
+#block-superfish-1 ul#superfish-1 li ul { background: url('/images/rgbapng/000000bf-5.png?1373905306'); background: rgba(0, 0, 0, 0.75); }
 #block-superfish-1 ul#superfish-1 li ul li, #block-superfish-1 ul#superfish-1 li ul a { width: 100%; }
 
 #superfish-1-select { background: #000; border: none; color: #fff; height: 32px; margin: 0 auto; display: block; }
@@ -134,6 +134,10 @@ h2.block-title { font-size: 2em; }
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input { background-color: #FFFFFF; border: 1px solid #CCCCCC; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s; }
 
 textarea:focus, input:focus { border-color: #31aae1; }
+
+.bue-ui input { padding: 0 2px; filter: url(filters.svg#grayscale); filter: gray; -webkit-filter: grayscale(1); opacity: .5; }
+
+.bue-ui { margin: 1px 0px; clear: both; display: block; }
 
 .page-node-add .form-item-title .description, .page-node-edit .form-item-title .description { font-size: .9em; left: auto; top: auto; }
 .page-node-add #dataset-node-form .form-item-title .description, .page-node-add #resource-node-form .form-item-title .description, .page-node-edit #dataset-node-form .form-item-title .description, .page-node-edit #resource-node-form .form-item-title .description { font-size: 18px; left: 145px; top: 15px; }

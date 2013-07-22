@@ -523,6 +523,18 @@ textarea:focus, input:focus {
 	border-color:$hover;
 }
 
+.bue-ui input {
+  padding: 0 2px;
+  filter: url(filters.svg#grayscale);
+  filter: gray;
+  -webkit-filter: grayscale(1);
+  opacity: .5;
+}
+.bue-ui {
+  margin: 1px 0px;
+  clear: both;
+  display: block;
+}
 .page-node-add,
 .page-node-edit {
 	.form-item-title .description {
