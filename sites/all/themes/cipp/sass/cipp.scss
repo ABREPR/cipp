@@ -4,6 +4,7 @@
 body,
 #page {
 	background:#fff;
+	font-family: $sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: $header;
@@ -12,6 +13,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 h2.block-title {
 	font-size:2em;
+}
+p {
+	font-family:$sans-serif;
 }
 .breadcrumb {
     font-size: inherit;
@@ -102,11 +106,12 @@ h2.block-title {
 			width:19.5%;
 			background:transparent;
 			margin:0;
+			line-height:auto;
 			a {
-		    	padding: 6px 6px 5px;
+		    	padding: 5px 6px 4px;
 		    	text-align:center;
-		    	font-family: $header;
-		    	font-size:18px;
+		    	font-family: $oswald;
+		    	font-size:14px;
 		    	font-weight:normal;
 		    	text-transform:uppercase;
 		    	letter-spacing:1px;
@@ -133,7 +138,7 @@ h2.block-title {
 	    	}
 		    &.first {
 				a.sf-depth-1 {
-					font-size:22px;
+					font-size:18px;
 				}
 				a .sf-sub-indicator {
 					top:.6em;

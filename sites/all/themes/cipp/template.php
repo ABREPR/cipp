@@ -15,6 +15,11 @@ function cipp_preprocess_page(&$vars) {
   }
 }
 
+function cipp_preprocess_html(&$vars) {
+  drupal_add_css('http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic,700italic', array('type' => 'external'));
+  drupal_add_css('http://fonts.googleapis.com/css?family=Oswald:400,700', array('type' => 'external'));
+}
+
 /**
  * Implements hook_form_alter.
  */
