@@ -6,7 +6,6 @@ php = 5.2.4
 version = 7.x-1.0
 project = cipp_groups
 dependencies[] = context
-dependencies[] = defaultcontent
 dependencies[] = features
 dependencies[] = list
 dependencies[] = options
