@@ -85,7 +85,7 @@ function dkan_sitewide_block_view($delta = '') {
 function dkan_sitewide_resource_additional_block($nid  = '') {
   $node = $nid ? node_load($nid) : menu_get_object();
   $file_info = array();
-  if (isset($node->field_upload[$node->language]) && $file = $node->field_upload[$node->language][0]) {
+  if (isset($node->field_upload[DKAN_FIELD_LANG]) && $file = $node->field_upload[DKAN_FIELD_LANG][0]) {
     $file_info[] = array(t('mimetype'), $file['filemime']);
     $file_info[] = array(t('filesize'), $file['filesize']);
     $file_info[] = array(t('resource type'), 'file upload');
@@ -105,7 +105,7 @@ function dkan_sitewide_license_block() {
   }
   else {
     if (isset($node->field_license) && $node->field_license) {
-      $key = $node->field_license[$node->language][0];
+      $key = $node->field_license[DKAN_FIELD_LANG][0];
       $field = field_info_instance('node', 'field_license', 'dataset');
       $raw_options = $field['widget']['settings']['available_options'];
       foreach (explode("\n", $raw_options) as $option) {
