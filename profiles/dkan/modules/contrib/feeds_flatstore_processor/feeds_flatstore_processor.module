@@ -19,19 +19,6 @@ function feeds_flatstore_processor_ctools_plugin_type() {
 }
 
 /**
- * Implements hook_form_alter().
- */
-function feeds_flatstore_processor_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'feeds_ui_mapping_form') {
-    $form['help'] = array(
-      '#type' => 'item',
-      '#title' => t('No Mapping Options'),
-      '#markup' => t('NOTE: This processor does not have any mapping options. All items in results are saved into rows in a table.'),
-    );
-  }
-}
-
-/**
  * Implements hook_feeds_before_import().
  */
 function feeds_flatstore_processor_feeds_before_import(FeedsSource $source) {

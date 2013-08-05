@@ -186,13 +186,14 @@ function leaflet_widget_widget_prepare_items($items) {
 }
 
 function leaflet_widget_widget_validate($element, &$form_state) {
+  return;
   $geophp = geophp_load();
   if (!$geophp) return FALSE;
 
   $geojson = json_decode($element['wkt']['#value']);
 
   $results = array();
-  if ($geojson->type === 'FeatureCollection') {
+  if ($geojson->type == 'FeatureCollection') {
     foreach ($geojson->features as $feature) {
       $results[] = array_merge($results, leaflet_widget_process_geojson($feature));
     }

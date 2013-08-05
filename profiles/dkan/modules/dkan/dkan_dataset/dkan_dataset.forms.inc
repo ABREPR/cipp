@@ -323,7 +323,9 @@ function dkan_dataset_resource_another_submit_js($form, &$form_state) {
   $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
   $commands[] = ajax_command_prepend('ul.nav-simple', '<li>' . l($form_state['values']['title'], 'node/' . $form_state['nid'] . '/edit') . '</li>');
   $commands[] = ajax_command_prepend('form.node-form', $message);
-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $nid)), TRUE);
+  // TODO: fix for no language.
+  $lang = $form['language']['#value'];
+  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
   $output = array('#type' => 'ajax', '#commands' => $commands);
   return $output;
 }
@@ -349,7 +351,11 @@ function dkan_dataset_dataset_submit_js($form, &$form_state) {
   $commands[] = ajax_command_replace('#block-dkan-forms-dkan-forms-dataset-help .content', '<div class="content">' . dkan_dataset_resource_form_help() . '</div>');
   $commands[] = ajax_command_replace('ol.stages', $stage);
   $commands[] = ajax_command_replace('#page-title', '<h1 class="title" id="page-title">Add data</h1>');
-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid)), TRUE);
+  // TODO: fix for no language.
+  $lang = $form['language']['#value'];
+  dpm($form);
+  dpm($lang);
+  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
 
   $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
   $output = array('#type' => 'ajax', '#commands' => $commands);

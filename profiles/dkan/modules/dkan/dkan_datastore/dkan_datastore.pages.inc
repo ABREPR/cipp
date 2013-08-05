@@ -109,10 +109,6 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
 function dkan_datastore_import_tab_form_submit($form, &$form_state) {
   $form_state['redirect'] = $form['#redirect'];
   $feed_nid = $form['#feed_nid'];
-  if ($form['#count']) {
-    $table_name = 'dkan_datastore_' . $feed_nid;
-    $result = db_truncate($table_name)->execute();
-  }
   feeds_source($form['#importer_id'], $feed_nid)->startImport();
 }
 
@@ -123,31 +119,72 @@ function dkan_datastore_import_tab_form_submit($form, &$form_state) {
  * Therefore $node may be missing.
  */
 function dkan_datastore_delete_tab_form($form, &$form_state, $importer_id, $node = NULL) {
+
   module_load_include('inc', 'feeds', 'feeds.pages');
+  $total_progress = 0;
+
+  $form = array();
   if (empty($node)) {
     $source = feeds_source($importer_id);
     $form['#redirect'] = 'import/' . $source->id;
+    $importer_ids = array($importer_id);
   }
   else {
-    $importer_id = feeds_get_importer_id($node->type);
-    $source = feeds_source($importer_id, $node->nid);
-    $form['#redirect'] = 'node/' . $source->feed_nid;
+    $importer_ids = feeds_get_importer_ids($node->type, $node->nid);
+    $form['#redirect'] = 'node/' . $node->nid;
   }
-  // Form cannot pass on source object.
-  $form['#importer_id'] = $source->id;
-  $form['#feed_nid'] = $source->feed_nid;
-  $form['source_status'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Delete Datatsore Records'),
-    '#tree' => TRUE,
-    '#value' => feeds_source_status($source),
-  );
-  $form = confirm_form($form, t('Delete all items from source?'), $form['#redirect'], '', t('Delete'), t('Cancel'), 'confirm feeds update');
-  drupal_set_title('Manage Datastore');
-  $progress = $source->progressClearing();
-  if ($progress !== FEEDS_BATCH_COMPLETE) {
-    $form['actions']['submit']['#disabled'] = TRUE;
-    $form['actions']['submit']['#value'] = t('Deleting (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
+
+  if ($importer_ids) {
+    // Form cannot pass on source object.
+    $form['#feed_nid'] = $node->nid;
+    foreach ($importer_ids as $importer_id => $weight) {
+      $source = feeds_source($importer_id, $node->nid);
+      $form[$importer_id]['source_status'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('@source_name: Status', array('@source_name' => $source->importer->config['name'])),
+        '#tree' => TRUE,
+        '#value' => feeds_source_status($source),
+      );
+      $progress = $source->progressClearing();
+      $total_progress += $progress;
+    }
+
+    if (count($importer_ids) == 1) {
+      $form['importer_ids'] = array(
+        '#type' => 'value',
+        '#value' => array($importer_id),
+      );
+    }
+    else {
+      $options = array();
+      foreach ($importer_ids as $importer_id => $weight) {
+        $source = feeds_source($importer_id, $node->nid);
+        $options[$importer_id] = $source->importer->config['name'];
+      }
+      $form['importer_ids'] = array(
+        '#type' => 'checkboxes',
+        '#options' => $options,
+        '#default_value' => array_keys($options),
+        '#title' => t('Sources'),
+        '#description' => t('Select the sources to delete items from.'),
+      );
+    }
+
+    $form = confirm_form($form, t('Delete all items from source?'), $form['#redirect'], '', t('Delete'), t('Cancel'), 'confirm feeds update');
+
+    if (count($importer_ids)) {
+      $progress = $total_progress / count($importer_ids);
+      if ($progress !== FEEDS_BATCH_COMPLETE) {
+        $form['actions']['submit']['#disabled'] = TRUE;
+        $form['actions']['submit']['#value'] =
+          t('Deleting (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
+      }
+    }
+  }
+  else {
+    $form['no_source'] = array(
+      '#markup' => t('No feeds sources added to node.'),
+    );
   }
   $form['#submit'] = array('feeds_delete_tab_form_submit');
   return $form;
@@ -161,38 +198,72 @@ function dkan_datastore_delete_tab_form($form, &$form_state, $importer_id, $node
  */
 function dkan_datastore_unlock_tab_form($form, &$form_state, $importer_id, $node = NULL) {
   module_load_include('inc', 'feeds', 'feeds.pages');
+  $total_progress = 0;
+
+  $form = array();
   if (empty($node)) {
     $source = feeds_source($importer_id);
     $form['#redirect'] = 'import/' . $source->id;
+    $importer_ids = array($importer_id);
   }
   else {
-    $importer_id = feeds_get_importer_id($node->type);
-    $source = feeds_source($importer_id, $node->nid);
-    $form['#redirect'] = 'node/' . $source->feed_nid;
+    $importer_ids = feeds_get_importer_ids($node->type, $node->nid);
+    $form['#redirect'] = 'node/' . $node->nid;
   }
-  // Form cannot pass on source object.
-  $form['#importer_id'] = $source->id;
-  $form['#feed_nid'] = $source->feed_nid;
-  $form['source_status'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Status'),
-    '#tree' => TRUE,
-    '#value' => feeds_source_status($source),
-  );
-  $form = confirm_form($form, t('Unlock this importer?'), $form['#redirect'], '', t('Delete'), t('Cancel'), 'confirm feeds update');
-  if ($source->progressImporting() == FEEDS_BATCH_COMPLETE && $source->progressClearing() == FEEDS_BATCH_COMPLETE) {
-    $form['source_locked'] = array(
-      '#type' => 'markup',
-      '#title' => t('Not Locked'),
-      '#tree' => TRUE,
-      '#markup' => t('This importer is not locked, therefore it cannot be unlocked.'),
+
+  if ($importer_ids) {
+    // Form cannot pass on source object.
+    $form['#feed_nid'] = $node->nid;
+    foreach ($importer_ids as $importer_id => $weight) {
+      $source = feeds_source($importer_id, $node->nid);
+      $form[$importer_id]['source_status'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('@source_name: Status', array('@source_name' => $source->importer->config['name'])),
+        '#tree' => TRUE,
+        '#value' => feeds_source_status($source),
+      );
+      $progress = $source->progressClearing();
+      $total_progress += $progress;
+    }
+
+    if (count($importer_ids) == 1) {
+      $form['importer_ids'] = array(
+        '#type' => 'value',
+        '#value' => array($importer_id),
+      );
+    }
+    else {
+      $options = array();
+      foreach ($importer_ids as $importer_id => $weight) {
+        $source = feeds_source($importer_id, $node->nid);
+        $options[$importer_id] = $source->importer->config['name'];
+      }
+      $form['importer_ids'] = array(
+        '#type' => 'checkboxes',
+        '#options' => $options,
+        '#default_value' => array_keys($options),
+        '#title' => t('Sources'),
+        '#description' => t('Select the sources to delete items from.'),
+      );
+    }
+
+    $form = confirm_form($form, t('Delete all items from source?'), $form['#redirect'], '', t('Delete'), t('Cancel'), 'confirm feeds update');
+
+    if (count($importer_ids)) {
+      $progress = $total_progress / count($importer_ids);
+      if ($progress !== FEEDS_BATCH_COMPLETE) {
+        $form['actions']['submit']['#disabled'] = TRUE;
+        $form['actions']['submit']['#value'] =
+          t('Deleting (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
+      }
+    }
+  }
+  else {
+    $form['no_source'] = array(
+      '#markup' => t('No feeds sources added to node.'),
     );
-    $form['actions']['submit']['#disabled'] = TRUE;
-    $form['actions']['submit']['#value'] = t('Unlock (disabled)');
   }
-  else {
-    $form['actions']['submit']['#value'] = t('Unlock');
-  }
+
   $form['#submit'] = array('feeds_unlock_tab_form_submit');
   return $form;
 }
