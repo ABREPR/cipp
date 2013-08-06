@@ -349,14 +349,14 @@ p {
 			background:none;
 			border:none;
 			border-bottom: 1px solid #ccc;
-			padding-left:60px;
+			padding-left:65px;
 			height:70px;
-			line-height:70px;
 			margin:0 0 10px;
 			filter: none; //override ie setting from dkan
 		}
 	}
 }
+
 .front {
 	#region-postscript-first {
 		.region-inner {
@@ -364,6 +364,7 @@ p {
 		}
 		h2.block-title {
 			background:transparent url(../images/new-datasets.png) no-repeat 0 50%;
+			line-height:70px;
 		}
 	}
 	#region-postscript-second {
