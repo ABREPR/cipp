@@ -26,6 +26,7 @@ $box-sizing-polyfill-path: "../scripts/boxsizing.htc";
 @import 'compass/utilities/general/clearfix';  // Better than Drupal's clearfix.
 @import 'compass/utilities/sprites';           // See http://compass-style.org/help/tutorials/spriting/
 @import 'compass/css3';                        // Use one CSS3 mixin instead of multiple vendor prefixes.
+@import 'compass/css3/filter';
 
 
 // Color Variables
@@ -59,4 +60,12 @@ $sans-serif-small:       Arial, Helvetica, sans-serif;
 @mixin background-opacity($color, $opacity: 0.3) {
     background: $color; /* The Fallback */
     background: rgba($color, $opacity);
+}
+
+@mixin filter( $var ) {
+	-webkit-filter: $var;
+	-moz-filter: $var;
+	-ms-filter: $var;
+	-o-filter: $var;
+	filter: $var;
 }

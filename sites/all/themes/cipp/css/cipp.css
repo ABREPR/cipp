@@ -10,6 +10,12 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 .breadcrumb { font-size: inherit; color: #00578e; }
 .breadcrumb a { color: #00578e; }
 
+.center { text-align: center; margin: 0 auto; }
+
+.left { text-align: left; }
+
+.right { text-align: right; }
+
 #zone-branding-wrapper { background-color: #FFFFFF; background-image: none; color: white; height: 80px; padding: 10px; filter: none; }
 
 .branding-data { line-height: 85px; }
@@ -89,7 +95,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 #block-dkan-sitewide-demo-front-dkan-search-front h2.block-title { font-size: 2em; filter: none; }
 
 .front #zone-postscript .block, .front #zone-postscript .view-content, .front #zone-postscript .view { background-color: white; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; box-shadow: none; margin-bottom: 20px; background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border: none; }
-.front #zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 60px; height: 70px; margin: 0 0 10px; filter: none; }
+.front #zone-postscript h2.block-title { background: none; border: none; border-bottom: 1px solid #ccc; padding-left: 65px; height: 70px; margin: 0 0 10px; filter: none; }
 
 .front #region-postscript-first .region-inner { padding: 0 15px; }
 .front #region-postscript-first h2.block-title { background: transparent url(../images/new-datasets.png) no-repeat 0 50%; line-height: 70px; }
@@ -120,6 +126,8 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 .views-view-grid td .views-field-name, .views-view-grid td .views-field-title { margin: 10px 0 0 0; display: block; }
 .views-view-grid tr:hover td, .views-view-grid tr.even:hover td.active, .views-view-grid tr.odd:hover td.active { background: #fff; }
 
+.view-faq .field-name-body { margin: .5em 0 1.5em 1em; }
+
 #field-tags-wrapper .path-form label, #edit-path label, .form-item-field-tags-und label, #edit-field-format label, #edit-field-tags-und label { width: auto; text-align: left; }
 
 .form-item-field-tags-und label { margin-top: 5px; }
@@ -137,7 +145,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 
 textarea:focus, input:focus { border-color: #31aae1; }
 
-.bue-ui input { padding: 0 2px; filter: url(filters.svg#grayscale); filter: gray; -webkit-filter: grayscale(1); opacity: .5; }
+.bue-ui input { padding: 0; margin: 0 2px; -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); filter: grayscale(100%); opacity: .5; }
 
 .bue-ui { margin: 1px 0px; clear: both; display: block; }
 

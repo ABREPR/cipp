@@ -24,6 +24,9 @@ p {
     	color:$link;
     }
 }
+.center { text-align:center;margin:0 auto; }
+.left { text-align:left; }
+.right { text-align:right; }
 
 #zone-branding-wrapper {
     background-color: #FFFFFF;
@@ -463,6 +466,12 @@ p {
 	}
 }
 
+.view-faq {
+	.field-name-body {
+		margin:.5em 0 1.5em 1em;
+	}
+}
+
 // NODES
 
 #field-tags-wrapper .path-form label,
@@ -530,10 +539,9 @@ textarea:focus, input:focus {
 }
 
 .bue-ui input {
-  padding: 0 2px;
-  filter: url(filters.svg#grayscale);
-  filter: gray;
-  -webkit-filter: grayscale(1);
+  padding: 0;
+  margin:0 2px;
+  @include filter(grayscale(100%));
   opacity: .5;
 }
 .bue-ui {
