@@ -6,6 +6,18 @@
  */
 
 /**
+ * Callback for DKAN settings form.
+ */
+function dkan_dataset_forms_setting_form($form) {
+  $form['dkan_dataset_ajax'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use AJAX for DKAN Dataset and Resources forms'),
+    '#default_value' => variable_get('dkan_dataset_ajax', TRUE),
+  );
+
+  return system_settings_form($form);
+}
+/**
  * Implements hook_field_group_build_pre_render_alter().
  */
 function dkan_dataset_field_group_build_pre_render_alter(&$element) {
@@ -115,32 +127,8 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
 
     if (arg(1) == 'add') {
-      // We don't need to see revision form when creating a new node.
-      $form['revision_information']['#access'] = FALSE;
-
-      $form['prefix']['#type'] = 'item';
-      $form['prefix']['#weight'] = '-20';
-      $form['prefix']['#markup'] = dkan_form_create_stages('dataset-create');
-
-      $form['actions']['next'] = array(
-        '#type' => 'submit',
-        '#value' => t('Next: Add data'),
-        '#weight' => -5,
-        '#ajax' => array(
-          'callback' => 'dkan_dataset_dataset_submit_js',
-          'wrapper' => $form['#id'],
-          'method' => 'replace',
-          'effect' => 'fade',
-        ),
-        '#submit' => array('node_form_submit'),
-      );
-      $form['actions']['terms'] = array(
-        '#type' => 'item',
-        '#markup' => '<div id="action-info">' .  t('Important: By submitting content, you agree to release your contributions under the Open Database License.') . '</div>',
-      );
-      unset($form['actions']['submit']);
     }
-    elseif (arg(2) == 'edit' && $query = drupal_get_query_parameters()) {
+    if (arg(2) == 'edit' && $query = drupal_get_query_parameters()) {
       if (isset($query['additional'])) {
         $form['prefix']['#type'] = 'item';
         $form['prefix']['#weight'] = '-20';
@@ -148,8 +136,39 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       }
     }
     else {
-      $form['actions']['submit']['#value'] = t('Finish');
-      $form['#action'] = '/node/add/dataset';
+      if (isset($form_state['node']->nid)) {
+        $form['actions']['submit']['#value'] = t('Finish');
+        $form['#action'] = '/node/add/dataset';
+      }
+      else {
+        // We don't need to see revision form when creating a new node.
+        $form['revision_information']['#access'] = FALSE;
+
+        $form['prefix']['#type'] = 'item';
+        $form['prefix']['#weight'] = '-20';
+        $form['prefix']['#markup'] = dkan_form_create_stages('dataset-create');
+
+        $form['actions']['next'] = array(
+          '#type' => 'submit',
+          '#value' => t('Next: Add data'),
+          '#weight' => -5,
+          '#ajax' => array(
+            'callback' => 'dkan_dataset_dataset_submit_js',
+            'wrapper' => '.node-dataset-form',
+            'method' => 'replace',
+            'effect' => 'fade',
+          ),
+          '#submit' => array('node_form_submit', 'dkan_dataset_dataset_submit'),
+        );
+        $form['actions']['terms'] = array(
+          '#type' => 'item',
+          '#markup' => '<div id="action-info">' .  t('Important: By submitting content, you agree to release your contributions under the Open Database License.') . '</div>',
+        );
+        if (!variable_get('dkan_dataset_ajax', TRUE)) {
+          unset($form['actions']['next']['#ajax']);
+        }
+        unset($form['actions']['submit']);
+      }
     }
   }
   if ($form_id == 'resource_node_form') {
@@ -223,6 +242,16 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       ),
       '#submit' => array('node_form_submit'),
     );
+  }
+}
+
+/**
+ * Form submission handler for dataset_form.
+ *
+ */
+function dkan_dataset_dataset_submit($form, &$form_state) {
+  if (!variable_get('dkan_dataset_ajax', TRUE)) {
+    $form_state['redirect'] = array('node/add/resource', array('query' => array('dataset' => $form_state['values']['nid'])));
   }
 }
 
@@ -360,7 +389,7 @@ function dkan_dataset_dataset_submit_js($form, &$form_state) {
   $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
   $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid)), TRUE);
 
-  $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
+  $commands[] = ajax_command_replace('.node-dataset-form', drupal_render($resource_form));
   $output = array('#type' => 'ajax', '#commands' => $commands);
   return $output;
 }
