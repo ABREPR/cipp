@@ -1,0 +1,74 @@
+diff --git a/taxonomy_to_apachesolr_link.module b/taxonomy_to_apachesolr_link.module
+index 11e7e21..c2a2472 100644
+--- a/taxonomy_to_apachesolr_link.module
++++ b/taxonomy_to_apachesolr_link.module
+@@ -16,6 +16,7 @@ function taxonomy_to_apachesolr_link_field_formatter_info() {
+       'label' => t('Apachesolr Link'),
+       'field types' => array('taxonomy_term_reference'),
+       'settings' => array(
++        'facetapi_searcher' => 'facetapi_searcher',
+         'search_path' => 'search',
+         'target' => '_self',
+       ),
+@@ -35,7 +36,7 @@ function taxonomy_to_apachesolr_link_field_formatter_view($entity_type, $entity,
+         $element[$delta] = array(
+           '#type' => 'link',
+           '#title' => $term->name,
+-          '#href' => _taxonomy_to_apachesolr_link_create_solr_search_url($term, $field['field_name'], $display['settings']['search_path']),
++          '#href' => _taxonomy_to_apachesolr_link_create_solr_search_url($term, $field['field_name'], $display['settings']['search_path'], $display['settings']['facetapi_searcher']),
+         );
+       }
+       break;
+@@ -51,6 +52,18 @@ function taxonomy_to_apachesolr_link_field_formatter_settings_form($field, $inst
+   $display = $instance['display'][$view_mode];
+   $settings = $display['settings'];
+ 
++  $searchers = facetapi_get_searcher_info();
++  $active_searchers = array();
++  foreach ($searchers as $searcher => $info) {
++    $active_searchers[$searcher] = $info['label'];
++  }
++  $element['facetapi_searcher'] = array(
++    '#type' => 'select',
++    '#title' => t('Searcher'),
++    '#description' => t('Select the searcher you will be using to link to.'),
++    '#options' => $active_searchers,
++    "#default_value" => $settings['facetapi_searcher'],
++  );
+   $element['search_path'] = array(
+     '#type' => 'textfield',
+     '#title' => t('Search path'),
+@@ -74,8 +87,8 @@ function taxonomy_to_apachesolr_link_field_formatter_settings_form($field, $inst
+ function taxonomy_to_apachesolr_link_field_formatter_settings_summary($field, $instance, $view_mode) {
+   $display = $instance['display'][$view_mode];
+   $settings = $display['settings'];
+-  $summary = t('Path: @search_path, Target: @target', array(
+-    '@search_path' => $settings['search_path'], '@target' => $settings['target'])
++  $summary = t('Path: @search_path, Searcher: @searcher, Target: @target', array(
++    '@search_path' => $settings['search_path'], '@searcher' => $settings['facetapi_searcher'], '@target' => $settings['target'])
+   );
+   return $summary;
+ }
+@@ -83,10 +96,18 @@ function taxonomy_to_apachesolr_link_field_formatter_settings_summary($field, $i
+ /**
+  * Returns a solrsearch filter query link for a taxonomy term.
+  */
+-function _taxonomy_to_apachesolr_link_create_solr_search_url(&$term, $field_name, $search_path) {
+-  global $base_url;
+-  drupal_alter('apachesolr_taxonomy_link', $link, $term, $field_name, $search_path);
+-  $link = urldecode($base_url . '/' . $search_path . '/' . $term->name . '?f[0]=im_' . $field_name . ':' . $term->tid);
++function _taxonomy_to_apachesolr_link_create_solr_search_url(&$term, $field_name, $search_path, $searcher) {
++  $adapter = facetapi_adapter_load($searcher);
++  $facet = facetapi_facet_load($field_name, $searcher);
++  // If a facet is not correctly returned return the term link.
++  if (is_array($facet)) {
++    $href = $adapter->getFacetPath($facet, array($term->tid), 0);
++    $link = $search_path . substr($href, strlen($_GET['q']));
++  }
++  else {
++    $link = 'taxonomy/term/' . $term->tid;
++  }
++  drupal_alter('apachesolr_taxonomy_link', $link, $context = array('term' => $term, 'field_name' => $field_name, 'search_path' => $search_path, 'searcher' => $searcher));
+   return $link;
+ }
+ 

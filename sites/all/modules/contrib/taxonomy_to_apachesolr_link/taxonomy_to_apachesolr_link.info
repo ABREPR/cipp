@@ -1,0 +1,4 @@
+name = Taxonomy to apachesolr link
+description = 'Converts taxonomy links to solrsearch query links'
+core = 7.x
+package = Search Toolkit

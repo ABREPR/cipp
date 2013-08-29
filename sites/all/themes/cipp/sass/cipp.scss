@@ -556,6 +556,18 @@ textarea:focus, input:focus {
 		    left: auto;
 		    top: auto;
 	}
+	#dataset-node-form {
+    .field-name-body {
+        textarea {
+          border: 1px solid #73BB6D;
+        }
+    }
+    .field-type-taxonomy-term-reference label {
+      width: 115px;
+      text-align: right;
+      padding-right: 15px;
+    }
+  }
 	#dataset-node-form,
 	#resource-node-form {
 		.form-item-title .description {
@@ -563,20 +575,57 @@ textarea:focus, input:focus {
 		    left: 145px;
 		    top: 15px;
 		}
+    .field-name-title-field {
+      input {
+        height: 55px;
+        webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 520px;
+        float: right;
+        margin-bottom: 8px;
+        border: 1px solid #73BB6D;
+      }
+      label {
+        margin-top: 18px;
+        width: 110px;
+        text-align: right;
+      }
+    }
+    .field-name-field-data-dictionary {
+      textarea {
+        border: 1px solid #73BB6D;
+      }
+    }
 		.form-item-field-tags-und label {
 			margin-top:10px;
 		}
-		#edit-field-tags label {
+    .form-item-language label {
 			width:120px;
 			text-align:right;
 		}
 		.field-name-field-license label {
 			margin-top:15px;
-		} 
+		}
 		.chzn-disabled input {
 			padding:0;
 			font-size:1em;
 		}
+    #node_dataset_form_group_additional {
+      margin-top: 15px;
+      padding-top: 5px;
+    }
+    .chzn-container-multi .chzn-choices {
+      border-radius: 5px;
+      input {
+        width: 144px;
+        padding: 0px;
+        font-size: 12px;
+        margin: 5px;
+        color: rgb(119, 119, 119);
+      }
+    }
 	}
 	#blog-node-form {
 		#edit-field-tags {
