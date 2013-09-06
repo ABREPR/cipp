@@ -148,5 +148,39 @@ function cipp_blocks_default_fe_block_settings() {
     'visibility' => 0,
   );
 
+  $export['views-tweets-block'] = array(
+    'cache' => -1,
+    'custom' => 0,
+    'delta' => 'tweets-block',
+    'module' => 'views',
+    'node_types' => array(),
+    'pages' => 'blog/*
+blog',
+    'roles' => array(),
+    'themes' => array(
+      'bartik' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'bartik',
+        'weight' => 0,
+      ),
+      'dkan' => array(
+        'region' => 'sidebar_second',
+        'status' => 1,
+        'theme' => 'dkan',
+        'weight' => 0,
+      ),
+      'seven' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'seven',
+        'weight' => 0,
+      ),
+    ),
+    'title' => 'Twitter PR',
+    'visibility' => 1,
+  );
+
   return $export;
 }
+
