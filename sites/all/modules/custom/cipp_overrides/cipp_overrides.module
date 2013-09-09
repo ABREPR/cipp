@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Cipp overrides feature.
+ */
+
+include_once 'cipp_overrides.features.inc';
