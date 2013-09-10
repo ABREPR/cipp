@@ -17,6 +17,7 @@
 
   Drupal.behaviors.dkanFormsSlugify = {
     attach: function (context, settings) {
+      console.log(context);
       // Slugify!
       if ($('#edit-path-alias').val() != '') {
         $('#url-edit-preview').hide();
@@ -29,6 +30,10 @@
         // Force URLs to be url friendly.
         $('#edit-path-alias').slugify('#edit-path-alias');
         // Only edit path alias if alias has not been edited.
+        $('.field-name-title-field input').click(function(e) {
+          $('#edit-path-alias').slugify($(this));
+          $('#url-slug').slugify($(this));
+        });
         $('.form-item-title input').click(function(e) {
           $('#edit-path-alias').slugify($(this));
           $('#url-slug').slugify($(this));

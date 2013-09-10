@@ -3,6 +3,32 @@
  * Provides options for recline visualization.
  */
 
+//
+// if api exists, use that
+// elseif dataproxy available use that
+// else use csv
+//
+// - allow control of desired backend
+// - return better response if it times out
+// - use features override to control behavior of recline as field formatter
+//
+//
+// 1) create new field formater for file upload or link
+// 2) if link to file use dataproxy
+// 3) field formatter checks if api exists, uses dataproxy if available, else
+// uses csv, keeps setting in field formatter settings
+// 4)
+//
+//
+//
+//
+// Data API link
+// - fix datastore_search to actually search
+// - show message on data api link if file exists but no resource has been uploaded
+// - fix install profile so files can be added to the datastore
+// - fix exeption on API if file exists but has not been added to the datastore
+//
+//
 (function ($) {
   Drupal.behaviors.Recline = {
     attach: function (context) {
@@ -26,7 +52,6 @@
       } else if ('#timeline' in state) {
         state['currentView'] = 'timeline';
       }
-      // Checks if dkan_datastore is installed.
       if (dkan) {
         var DKAN_API = '/api/action/datastore/search.json';
         var url = window.location.origin + DKAN_API + '?resource_id=' + uuid;
@@ -37,19 +62,26 @@
           dataType: 'json',
           success: function(data, status) {
             if ('success' in data && data.success) {
-              var dataset = new recline.Model.Dataset({
-                endpoint: window.location.origin + '/api',
-                url: url,
-                id: uuid,
-                backend: 'ckan',
-              });
-              dataset.fetch();
-              return createExplorer(dataset, state);
+              DkanDatastore = true;
             }
           },
           error: function(data, status) {
             $('.data-explorer').append('<div class="messages status">Unable to connect to the datastore.</div>');
           },
+        });
+        DkanApi.done(function(data) {
+          if (DkanDatastore) {
+            var dataset = new recline.Model.Dataset({
+              endpoint: window.location.origin + '/api',
+              url: url,
+              id: uuid,
+              backend: 'ckan',
+            });
+            dataset.fetch();
+            return createExplorer(dataset, state);
+          }
+          else {
+          }
         });
       }
       if (fileType == 'text/csv') {
@@ -72,8 +104,8 @@
             }
           }
         });
+      // TODO: check filetype if xls.
       }
-      // Checks if xls.
       else if (fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || fileType == 'application/vnd.ms-excel') {
         var dataset = new recline.Model.Dataset({
           url: file,
