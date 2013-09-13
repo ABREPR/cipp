@@ -176,9 +176,11 @@ body.page-blog #block-system-main .block-inner { padding-top: 0; }
 body.page-blog #edit-search-api-views-fulltext-wrapper { width: 100%; padding-top: 0; }
 body.page-blog #edit-search-api-views-fulltext-wrapper label { width: 0; height: 0; overflow: hidden; margin: 0; }
 body.page-blog #edit-search-api-views-fulltext-wrapper input { width: 100%; height: 2.3em; font-size: 1.6em; color: #666; padding: 0 1em; }
+body.page-blog .views-row { margin-bottom: 2.5em; }
 body.page-blog .views-field-title { margin-bottom: 0.3em; }
 body.page-blog .pub-deets { margin-bottom: 1em; }
 body.page-blog .views-field-field-content-image { float: left; margin: 0 1em 1em 0; }
 body.page-blog p { font-size: 1.1em; line-height: 1.4em; }
-body.page-blog .continue-reading { float: left; clear: both; }
+body.page-blog .continue-reading { float: left; clear: both; margin-bottom: 0.5em; }
+body.page-blog .views-field-field-tags { float: left; clear: left; }
 body.page-blog .block-facetapi li { list-style: none; }

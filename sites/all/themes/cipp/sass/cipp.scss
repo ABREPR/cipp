@@ -688,6 +688,9 @@ body.page-blog {
       padding: 0 1em;
     }
   }
+  .views-row {
+    margin-bottom: 2.5em;
+  }
   .views-field-title {
     margin-bottom: 0.3em;
   }
@@ -705,6 +708,11 @@ body.page-blog {
   .continue-reading {
     float: left;
     clear: both;
+    margin-bottom:0.5em;
+  }
+  .views-field-field-tags {
+    float: left;
+    clear: left;
   }
   .block-facetapi {
     li {
