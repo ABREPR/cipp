@@ -19,7 +19,7 @@ p {
 }
 .breadcrumb {
     font-size: inherit;
-    color:$link; 
+    color:$link;
     a {
     	color:$link;
     }
@@ -43,7 +43,7 @@ p {
 .front .zone-preface-wrapper {
 	background-image: url("../images/homepage.jpg");
 	@include background-size(cover);
-	position:center center; 
+	position:center center;
 }
 .front .zone-preface-wrapper:after {
     background-color: transparent;
@@ -54,8 +54,8 @@ p {
 .node-type-blog .zone-preface-wrapper {
 	background-image: url("../images/blog.jpg");
 	@include background-size(cover);
-	position:center center; 
-	height:104px;	
+	position:center center;
+	height:104px;
 }
 
 .front #section-header {
@@ -67,9 +67,9 @@ p {
 }
 #section-footer:after, #section-footer:before,
 #zone-menu-wrapper:after, #zone-menu-wrapper:before,
-.zone-postscript-wrapper:before, 
-.zone-postscript-wrapper:after, 
-.zone-preface-wrapper:before, 
+.zone-postscript-wrapper:before,
+.zone-postscript-wrapper:after,
+.zone-preface-wrapper:before,
 .zone-preface-wrapper:after {
 	border:none !important;
 	height:0 !important;
@@ -292,7 +292,7 @@ p {
 #region-branding #block-dkan-sitewide-dkan-sitewide-search-bar input.form-submit {
 	background:none;
 }
-#region-branding #block-dkan-sitewide-dkan-sitewide-search-bar, 
+#region-branding #block-dkan-sitewide-dkan-sitewide-search-bar,
 #block-dkan-sitewide-dkan-sitewide-search-bar {
     position: absolute;
     right: 0;
@@ -404,7 +404,7 @@ p {
 	#region-preface-first.grid-6 {
 		width:100%;
 	}
-} 
+}
 
 .container-12 .grid-12 {
 	min-width:auto; //override dkan
@@ -433,7 +433,7 @@ p {
 	}
 }
 
-// VIEWS 
+// VIEWS
 
 .views-field-title {
 	a {
@@ -512,21 +512,21 @@ p {
 
 // FORMS
 
-textarea, 
-input[type="text"], 
-input[type="password"], 
-input[type="datetime"], 
-input[type="datetime-local"], 
-input[type="date"], 
-input[type="month"], 
-input[type="time"], 
-input[type="week"], 
-input[type="number"], 
-input[type="email"], 
-input[type="url"], 
-input[type="search"], 
-input[type="tel"], 
-input[type="color"], 
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
 .uneditable-input {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
@@ -653,4 +653,39 @@ textarea:focus, input:focus {
     text-align: center;
     margin-top:1.5em;
     filter: none; //override ie setting from dkan
+}
+
+body.page-blog {
+  #zone-preface-wrapper {
+    border-bottom: 1px solid;
+  }
+  h1 {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  #edit-search-api-views-fulltext-wrapper {
+    width: 100%;
+    input {
+      width: 100%;
+      height: 2em;
+      font-size: 1.6em;
+      color:#666;
+      padding: 0 1em;
+    }
+  }
+  .views-field-title {
+    margin-bottom: 0.3em;
+  }
+  .pub-deets {
+    margin-bottom: 1em;
+  }
+  .views-field-field-content-image {
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+  p {
+    font-size: 1.1em;
+    line-height: 1.4em;
+  }
 }
