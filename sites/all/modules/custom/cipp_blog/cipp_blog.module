@@ -5,3 +5,14 @@
  */
 
 include_once 'cipp_blog.features.inc';
+
+function cipp_blog_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == "views_exposed_form" && $form['#id'] == "views-exposed-form-blog-search-page") {
+    // dsm($form);
+    $form['search_api_views_fulltext']['#attributes']['placeholder'] = t($form['#info']['filter-search_api_views_fulltext']['label']);
+    if (isset($form_state['pager_plugin'])) {
+      $form['submit']['#type'] = 'image_button';
+      $form['submit']['#src'] = isset($form_state['pager_plugin']) ? 'profiles/dkan/images/icon-search-27x26.png' : '';
+    }
+  }
+}
