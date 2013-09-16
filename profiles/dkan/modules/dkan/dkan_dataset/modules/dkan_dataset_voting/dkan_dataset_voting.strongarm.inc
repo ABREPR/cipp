@@ -16,7 +16,7 @@ function dkan_dataset_voting_strongarm() {
   $strongarm->name = 'ajax_comments_node_types';
   $strongarm->value = array(
     'dataset' => 'dataset',
-    'group' => 0,
+    'group' => 0, /* What is this instance of 'group' referencing? */
     'page' => 0,
     'resource' => 0,
   );

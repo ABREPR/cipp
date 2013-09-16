@@ -86,15 +86,6 @@ function dkan_dataset_views_default_views() {
   $handler->display->display_options['fields']['field_granularity']['table'] = 'field_data_field_granularity';
   $handler->display->display_options['fields']['field_granularity']['field'] = 'field_granularity';
   $handler->display->display_options['fields']['field_granularity']['label'] = 'granularity';
-  /* Field: Content: Groups audience */
-  $handler->display->display_options['fields']['og_group_ref']['id'] = 'og_group_ref';
-  $handler->display->display_options['fields']['og_group_ref']['table'] = 'og_membership';
-  $handler->display->display_options['fields']['og_group_ref']['field'] = 'og_group_ref';
-  $handler->display->display_options['fields']['og_group_ref']['label'] = 'publisher';
-  $handler->display->display_options['fields']['og_group_ref']['settings'] = array(
-    'link' => 0,
-  );
-  $handler->display->display_options['fields']['og_group_ref']['delta_offset'] = '0';
   /* Field: Content: License */
   $handler->display->display_options['fields']['field_license']['id'] = 'field_license';
   $handler->display->display_options['fields']['field_license']['table'] = 'field_data_field_license';
@@ -171,6 +162,7 @@ function dkan_dataset_views_default_views() {
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
+  // does this line go away?
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
   /* Filter criterion: Content: Type */
@@ -322,6 +314,7 @@ function dkan_dataset_views_default_views() {
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
+  // does this line go away?
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
 
