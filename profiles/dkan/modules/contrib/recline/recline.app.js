@@ -46,13 +46,17 @@
               dataset.fetch();
               return createExplorer(dataset, state);
             }
+            else {
+              $('.data-explorer').append('<div class="messages status">Error returned from datastore: ' + data + '.</div>');
+            }
+
           },
           error: function(data, status) {
             $('.data-explorer').append('<div class="messages status">Unable to connect to the datastore.</div>');
           },
         });
       }
-      if (fileType == 'text/csv') {
+      else if (fileType == 'text/csv') {
         $.ajax({
           url: file,
           timeout: 1000,
@@ -62,7 +66,14 @@
                backend: 'csv',
             });
             dataset.fetch();
-            createExplorer(dataset, state);
+            var views = createExplorer(dataset, state);
+            // The map needs to get redrawn when we are delivering from the ajax
+            // call.
+            $.each(views, function(i, view) {
+              if (view.id == 'map') {
+                view.view.redraw('refresh');
+              }
+            });
           },
           error: function(x, t, m) {
             if (t === "timeout") {
@@ -73,19 +84,14 @@
           }
         });
       }
-      // Checks if xls.
+       // Checks if xls.
       else if (fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || fileType == 'application/vnd.ms-excel') {
         var dataset = new recline.Model.Dataset({
           url: file,
           backend: 'dataproxy',
         });
         dataset.fetch();
-        if (dataset.recordCount) {
-          createExplorer(dataset, state);
-        }
-        else {
-          $('.data-explorer').append('<div class="messages status">Unable to retreive data for selected file. This may be do to an interuption with the DataProxy service.</div>');
-        }
+        var views = createExplorer(dataset, state);
       }
       else {
         $('.data-explorer').append('<div class="messages status">File type ' + fileType + ' not supported for preview.</div>');
@@ -130,13 +136,14 @@
       );
     }
     if (map) {
+      var view = new recline.View.Map({
+          model: dataset
+      });
       views.push(
       {
         id: 'map',
         label: 'Map',
-        view: new recline.View.Map({
-          model: dataset
-        }),
+        view: view,
       }
       );
     }
@@ -147,6 +154,7 @@
       state: state,
       views: views
     });
+    return views;
   }
 
 })(jQuery);

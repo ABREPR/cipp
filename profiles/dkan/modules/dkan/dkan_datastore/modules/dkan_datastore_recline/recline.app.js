@@ -32,6 +32,7 @@
 (function ($) {
   Drupal.behaviors.Recline = {
     attach: function (context) {
+      console.log('asf');
       file = Drupal.settings.recline.file;
       grid = Drupal.settings.recline.grid;
       graph = Drupal.settings.recline.graph;
@@ -98,7 +99,6 @@
           },
           error: function(x, t, m) {
             if (t === "timeout") {
-              $('.data-explorer').append('<div class="messages status">File was too large or unavailable for preview.</div>');
             } else {
               $('.data-explorer').append('<div class="messages status">Data preview unavailable.</div>');
             }
