@@ -114,18 +114,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       }
     }
 
-    if (isset($form['og_group_ref'])) {
-      // Don't show groups if user doesn't have any groups to add.
-      $groups = $form['og_group_ref'][DKAN_FIELD_LANG][0]['default']['#options'];
-      if (count($groups) < 2) {
-        $form['og_group_ref']['#access'] = FALSE;
-      }
-      // Move groups to vertical tabs.
-      $form['og_group_ref']['#group'] = 'additional_settings';
-      $form['og_group_ref']['#title'] = t('Groups');
-      $form['og_group_ref']['#type'] = 'fieldset';
-    }
-
     if (arg(1) == 'add') {
     }
     if (arg(2) == 'edit' && $query = drupal_get_query_parameters()) {
@@ -195,10 +183,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
     $form['field_link_api'][DKAN_FIELD_LANG][0]['#title'] = '';
     $form['field_link_file'][DKAN_FIELD_LANG][0]['#title'] = '';
-    // Move groups to vertical tabs.
-    $form['og_group_ref']['#group'] = 'additional_settings';
-    $form['og_group_ref']['#title'] = t('Groups');
-    $form['og_group_ref']['#type'] = 'fieldset';
 
     $action_query = '';
     if ($query = drupal_get_query_parameters()) {

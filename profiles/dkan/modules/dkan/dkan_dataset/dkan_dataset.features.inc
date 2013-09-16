@@ -85,13 +85,6 @@ function dkan_dataset_rdf_default_mappings() {
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
     ),
-    'og_group_ref' => array(
-      'type' => 'property',
-      'datatype' => 'xsd:string',
-      'predicates' => array(
-        0 => 'dc:publisher',
-      ),
-    ),
     'field_frequency' => array(
       'type' => 'property',
       'datatype' => 'xsd:string',
