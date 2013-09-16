@@ -50,13 +50,6 @@ function dkan_default_content_content_defaults() {
         ),
       ),
     ),
-    'og_group_ref' => array(
-      'und' => array(
-        0 => array(
-          'target_id' => '1',
-        ),
-      ),
-    ),
     'field_spatial' => array(
       'und' => array(
         '0' => array(
@@ -93,16 +86,16 @@ function dkan_default_content_content_defaults() {
     'body' => array(
       'und' => array(
         0 => array(
-          'value' => 'This is a list and map of polling places in Madison, WI. 
+          'value' => 'This is a list and map of polling places in Madison, WI.
 
-Original data here: 
+Original data here:
 https://data.cityofmadison.com/Polling-Places/Polling-Places/rtyh-6ucr
 ',
           'summary' => '',
           'format' => 'html',
           'safe_value' => '<p>This is a list and map of polling places in Madison, WI.</p>
 
-<p>Original data here: 
+<p>Original data here:
 <a href="https://data.cityofmadison.com/Polling-Places/Polling-Places/rtyh-6ucr">https://data.cityofmadison.com/Polling-Places/Polling-Places/rtyh-6ucr</a></p>
 ',
           'safe_summary' => '',
@@ -170,13 +163,6 @@ State data: http://statehealthfacts.org/comparetable.jsp?ind=649&cat=1',
           'value' => 'notspecified',
           'format' => NULL,
           'safe_value' => 'notspecified',
-        ),
-      ),
-    ),
-    'og_group_ref' => array(
-      'und' => array(
-        0 => array(
-          'target_id' => '2',
         ),
       ),
     ),
@@ -303,13 +289,6 @@ License: PDDL (Source indicates no restrictions on data).',
           'value' => 'odc-pddl',
           'format' => NULL,
           'safe_value' => 'odc-pddl',
-        ),
-      ),
-    ),
-    'og_group_ref' => array(
-      'und' => array(
-        0 => array(
-          'target_id' => '2',
         ),
       ),
     ),
@@ -460,13 +439,6 @@ Click on Graph button under Preview and plot date (x-axis) against price (y-axis
         ),
       ),
     ),
-    'og_group_ref' => array(
-      'und' => array(
-        0 => array(
-          'target_id' => '1',
-        ),
-      ),
-    ),
     'field_tags' => array(
       'und' => array(
         0 => array(
@@ -530,7 +502,7 @@ Customers: see http://getdkan.com for more information.',
 
 As an Open Data Portal is designed to be feature-compliant with CKAN: <a href="http://ckan.org">http://ckan.org</a>.
 
-The goal is to combine the utility of the CKAN API with the power of Drupal. 
+The goal is to combine the utility of the CKAN API with the power of Drupal.
 
 Development will be done here: <a href="http://drupal.org/project/dkan">http://drupal.org/project/dkan</a>
 
@@ -559,8 +531,7 @@ More documentation coming soon.',
           'value' => 'This group contains various real datasets that show CKAN\'s data previewer in action. The previewer shows a configurable grid view of tabular data, plots columns of data on a graph, and shows geo-coded data on an interactive map.',
           'summary' => '',
           'format' => 'plain_text',
-          'safe_value' => '<p>This group contains various real datasets that show CKAN&#039;s data previewer in action. The previewer shows a configurable grid view of tabular data, plots columns of data on a graph, and shows geo-coded data on an interactive map.</p>
-',
+          'safe_value' => '<p>This group contains various real datasets that show CKAN&#039;s data previewer in action. The previewer shows a configurable grid view of tabular data, plots columns of data on a graph, and shows geo-coded data on an interactive map.</p>',
           'safe_summary' => '',
         ),
       ),
@@ -602,8 +573,7 @@ More documentation coming soon.',
           'value' => 'CKAN can plot both latitude and longitude as well as GeoJSON on a map. For more information, see ',
           'summary' => '',
           'format' => 'plain_text',
-          'safe_value' => '<p>CKAN can plot both latitude and longitude as well as GeoJSON on a map. For more information, see</p>
-',
+          'safe_value' => '<p>CKAN can plot both latitude and longitude as well as GeoJSON on a map. For more information, see</p>',
           'safe_summary' => '',
         ),
       ),

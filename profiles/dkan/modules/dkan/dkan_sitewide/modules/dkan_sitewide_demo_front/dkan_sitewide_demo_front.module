@@ -58,7 +58,7 @@ function dkan_demo_front_block() {
 return
   '<div class="module-content">
     <header>
-      <p>Try out standard DKAN functionality in a sandbox environment. Search for datasets directly from the homepage or by navigating to the <a href="dataset">Datasets</a> search page where you can facet by tags, groups and format.</p>
+      <p>Try out standard DKAN functionality in a sandbox environment. Search for datasets directly from the homepage or by navigating to the <a href="dataset">Datasets</a> search page where you can facet by tags and format.</p>
     </header>
     <section class="featured media-overlay">
       <h2 class="media-heading">DKAN‘s data previewing tool has many powerful features</h2>
@@ -90,8 +90,7 @@ function dkan_add_front_block() {
 function dkan_sitewide_demo_front_form_alter(&$form, &$form_state, $form_id) {
   // TODO: Move out of front module.
   if ($form_id == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-dataset-page' ||
-    $form['#id'] == 'views-exposed-form-user-profile-search-entity-view-1' ||
-    $form['#id'] == 'views-exposed-form-groups-search-entity-view-1') {
+    $form['#id'] == 'views-exposed-form-user-profile-search-entity-view-1' {
     unset($form['terms']['#size']);
     $form['#info']['filter-search_api_views_fulltext']['description'] = t('Search');
     $form['#info']['filter-search_api_views_fulltext']['label'] = '';
@@ -100,18 +99,5 @@ function dkan_sitewide_demo_front_form_alter(&$form, &$form_state, $form_id) {
       $form['submit']['#type'] = 'image_button';
       $form['submit']['#src'] = isset($form_state['pager_plugin']) ? 'profiles/dkan/images/icon-search-27x26.png' : '';
     }
-  }
-}
-
-/**
- * Implements hook_views_post_execute().
- */
-function dkan_sitewide_demo_front_views_post_execute(&$view) {
-  // This adds the list of datasets to the view of groups. The group nid is used
-  // as an argument for group audience.
-  if ($view->name == 'front_page_group_list' && ($view->current_display == 'block' || $view->current_display == 'block_2') && isset($view->result[0])) {
-    $nid = $view->result[0]->nid;
-    $group_nodes = views_embed_view('front_page_group_list', 'block_1', $nid);
-    $view->attachment_after = $group_nodes;
   }
 }

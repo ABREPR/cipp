@@ -115,21 +115,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       }
     }
 
-    if (isset($form['og_group_ref'])) {
-      // Get langcode for og_group_ref.
-      $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
-
-      // Don't show groups if user doesn't have any groups to add.
-      $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
-      if (count($groups) < 2) {
-        $form['og_group_ref']['#access'] = FALSE;
-      }
-      // Move groups to vertical tabs.
-      $form['og_group_ref']['#group'] = 'additional_settings';
-      $form['og_group_ref']['#title'] = t('Groups');
-      $form['og_group_ref']['#type'] = 'fieldset';
-    }
-
     if (arg(1) == 'add') {
       // We don't need to see revision form when creating a new node.
       $form['revision_information']['#access'] = FALSE;
@@ -207,11 +192,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     // Get langcode for field_link_file.
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
     $form['field_link_file'][$field_link_file_langcode][0]['#title'] = '';
-
-    // Move groups to vertical tabs.
-    $form['og_group_ref']['#group'] = 'additional_settings';
-    $form['og_group_ref']['#title'] = t('Groups');
-    $form['og_group_ref']['#type'] = 'fieldset';
 
     $action_query = '';
     if ($query = drupal_get_query_parameters()) {
