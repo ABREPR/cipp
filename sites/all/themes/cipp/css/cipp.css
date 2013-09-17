@@ -37,7 +37,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 #region-sidebar-second .block .block-inner { padding: 0; }
 #region-sidebar-second .block .content { padding: 5px 10px; }
 
-#zone-menu-wrapper { background: url('/images/rgbapng/000000bf-5.png?1373342750'); background: rgba(0, 0, 0, 0.75); height: 35px; z-index: 10; padding: 0; }
+#zone-menu-wrapper { background: url('/images/rgbapng/000000bf-5.png?1373905306'); background: rgba(0, 0, 0, 0.75); height: 35px; z-index: 10; padding: 0; }
 
 #block-superfish-1 ul#superfish-1 { width: 100%; margin: 0; }
 #block-superfish-1 ul#superfish-1 li { width: 19.5%; background: transparent; margin: 0; line-height: auto; }
@@ -48,7 +48,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 #block-superfish-1 ul#superfish-1 li a:hover { background-color: #31aae1; text-decoration: none; }
 #block-superfish-1 ul#superfish-1 li.first a.sf-depth-1 { font-size: 18px; }
 #block-superfish-1 ul#superfish-1 li.first a .sf-sub-indicator { top: .6em; }
-#block-superfish-1 ul#superfish-1 li ul { background: url('/images/rgbapng/000000bf-5.png?1373342750'); background: rgba(0, 0, 0, 0.75); }
+#block-superfish-1 ul#superfish-1 li ul { background: url('/images/rgbapng/000000bf-5.png?1373905306'); background: rgba(0, 0, 0, 0.75); }
 #block-superfish-1 ul#superfish-1 li ul li, #block-superfish-1 ul#superfish-1 li ul a { width: 100%; }
 
 #superfish-1-select { background: #000; border: none; color: #fff; height: 32px; margin: 0 auto; display: block; }
@@ -185,3 +185,9 @@ body.page-blog p { font-size: 1.1em; line-height: 1.4em; }
 body.page-blog .continue-reading { float: left; clear: both; margin-bottom: 0.5em; }
 body.page-blog .views-field-field-tags { float: left; clear: left; }
 body.page-blog .block-facetapi li { list-style: none; }
+
+.node ul.inline, .node ol.inline { margin: 0; }
+
+.node-links ul li { padding: 0; }
+.node-links ul li a { background: none no-repeat scroll 0 0 transparent; display: inline; border: medium none; float: none; width: auto; padding: 0; margin: 0; }
+.node-links ul li span { margin-right: 10px; }

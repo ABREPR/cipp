@@ -725,3 +725,21 @@ body.page-blog {
     }
   }
 }
+.node ul.inline, .node ol.inline {
+  margin: 0;
+}
+.node-links ul li {
+  a {
+    background: none no-repeat scroll 0 0 transparent;
+    display: inline;
+    border: medium none;
+    float: none;
+    width: auto;
+    padding: 0;
+    margin: 0;
+  }
+  span {
+    margin-right: 10px;
+  }
+  padding: 0;
+}
