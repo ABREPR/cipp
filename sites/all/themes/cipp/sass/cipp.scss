@@ -743,3 +743,16 @@ body.page-blog {
   }
   padding: 0;
 }
+.service-links ul.links li {
+  display: inline-block;
+  padding: 0 5px;
+  float: left;
+}
+.service-links ul {
+  margin: 0;
+  padding: 10px 0;
+  height: 25px;
+}
+li.service-links-twitter-widget {
+  width: 75px;
+}

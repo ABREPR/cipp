@@ -191,3 +191,9 @@ body.page-blog .block-facetapi li { list-style: none; }
 .node-links ul li { padding: 0; }
 .node-links ul li a { background: none no-repeat scroll 0 0 transparent; display: inline; border: medium none; float: none; width: auto; padding: 0; margin: 0; }
 .node-links ul li span { margin-right: 10px; }
+
+.service-links ul.links li { display: inline-block; padding: 0 5px; float: left; }
+
+.service-links ul { margin: 0; padding: 10px 0; height: 25px; }
+
+li.service-links-twitter-widget { width: 75px; }
