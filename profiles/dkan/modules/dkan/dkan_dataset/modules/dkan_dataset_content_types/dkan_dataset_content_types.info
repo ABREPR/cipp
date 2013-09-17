@@ -18,7 +18,6 @@ dependencies[] = leaflet_widget
 dependencies[] = link_iframe_formatter
 dependencies[] = list
 dependencies[] = node
-dependencies[] = og
 dependencies[] = options
 dependencies[] = recline
 dependencies[] = select_or_other
