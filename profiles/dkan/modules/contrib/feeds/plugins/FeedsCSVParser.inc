@@ -22,6 +22,8 @@ class FeedsCSVParser extends FeedsParser {
     $parser = new ParserCSV();
     $delimiter = $source_config['delimiter'] == 'TAB' ? "\t" : $source_config['delimiter'];
     $parser->setDelimiter($delimiter);
+    $parser->setEncoding($source_config['encoding']['encoding']);
+    $parser->setEncodingCheck($source_config['encoding']['check_encoding']);
 
     $iterator = new ParserCSVIterator($fetcher_result->getFilePath());
     if (empty($source_config['no_headers'])) {
@@ -106,6 +108,8 @@ class FeedsCSVParser extends FeedsParser {
   public function sourceDefaults() {
     return array(
       'delimiter' => $this->config['delimiter'],
+      'encoding' => $this->config['encoding'],
+      'check_encoding' => $this->config['check_encoding'],
       'no_headers' => $this->config['no_headers'],
     );
   }
@@ -164,7 +168,75 @@ class FeedsCSVParser extends FeedsParser {
       '#description' => t('Check if the imported CSV file does not start with a header row. If checked, mapping sources must be named \'0\', \'1\', \'2\' etc.'),
       '#default_value' => isset($source_config['no_headers']) ? $source_config['no_headers'] : 0,
     );
-    return $form;
+    return $form + $this->configEncodingForm();
+  }
+
+  public function configEncodingForm($sourceForm = FALSE) {
+    $form = array();
+    $defaults = $this->configDefaults();
+    if (extension_loaded('mbstring')) {
+      $form['encoding'] = array(
+        '#type' => 'fieldset',
+        '#title' => 'Encoding conversion',
+        '#collapsible' => TRUE,
+        '#collapsed' => $sourceForm || ($this->config['encoding'] == $defaults['encoding'] && $this->config['check_encoding'] == $defaults['check_encoding']),
+      );
+      $options = mb_list_encodings();
+      $options = array_combine($options, $options);
+      $form['encoding']['encoding'] = array(
+        '#type' => 'select',
+        '#title' => t('Source file encoding'),
+        '#description' => t('Performs encoding conversion of a source files to UTF-8. Defaults to <code>UTF-8</code> &mdash; no encoding conversion will happen.'),
+        '#options' => $options,
+        '#default_value' => $this->config['encoding'],
+      );
+      $form['encoding']['check_encoding'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Check encoding'),
+        '#description' => t('Checks encoding of a source file and breaks import process if encoding differs.'),
+        '#default_value' => $this->config['check_encoding'],
+      );
+    }
+    else {
+      $form['encoding']['encoding'] = array(
+        '#markup' => '<p><em>' . t('Encoding conversion is disabled due to the lack of <code>mbstring</code> PHP extension.') . '</em></p>',
+      );
+    }
+     return $form;
+   }
+
+  /**
+   * Checks and converts encoding of input data
+   *
+   * @param $data
+   *   A chunk of data
+   * @return
+   *   Data in correct encoding or throws exceptions if
+   *   ecnoding doesn't match or mbstring is not found.
+   */
+  private function fixEncoding($data) {
+
+    if (extension_loaded('mbstring')) {
+      // Check encoding if needed
+      if ($this->check_encoding) {
+        if (!mb_check_encoding($data, $this->from_encoding)) {
+          throw new Exception(t('Source file is not in @encoding encoding.', array('@encoding' => $this->from_encoding)));
+        }
+      }
+
+      $encode_array = array('ASCII', 'UTF-8', 'GBK', 'GB2312', 'BIG5');
+      $this->encoding = mb_detect_encoding($data, $encode_array);
+
+      // Convert encoding if needed
+      if ($this->encoding != $this->to_encoding) {
+        $data = mb_convert_encoding($data, $this->to_encoding, $this->encoding);
+      }
+    }
+    else {
+      throw new Exception(t('For encoding conversion <code>mbstring</code> PHP extension must be available.'));
+    }
+
+    return $data;
   }
 
   /**
@@ -173,6 +245,8 @@ class FeedsCSVParser extends FeedsParser {
   public function configDefaults() {
     return array(
       'delimiter' => ',',
+      'encoding' => 'UTF-8',
+      'check_encoding' => FALSE,
       'no_headers' => 0,
     );
   }

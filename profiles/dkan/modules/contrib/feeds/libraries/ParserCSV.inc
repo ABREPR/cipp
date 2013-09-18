@@ -76,6 +76,8 @@ class ParserCSV {
 
   public function __construct() {
     $this->delimiter = ',';
+    $this->from_encoding = $this->to_encoding = $this->encoding = 'UTF-8';
+    $this->check_encoding = FALSE;
     $this->skipFirstLine = FALSE;
     $this->columnNames = FALSE;
     $this->timeout = FALSE;
@@ -92,6 +94,22 @@ class ParserCSV {
    */
   public function setDelimiter($delimiter) {
     $this->delimiter = $delimiter;
+  }
+
+  /**
+   * Set the source file encoding.
+   * By default, UTF-8.
+   */
+  public function setEncoding($encoding) {
+    $this->from_encoding = $encoding;
+  }
+
+  /**
+   * Set the option to check source file encoding.
+   * By default, FALSE.
+   */
+  public function setEncodingCheck($check_encoding) {
+    $this->check_encoding = $check_encoding;
   }
 
   /**
@@ -197,7 +215,7 @@ class ParserCSV {
     for ($lineIterator->rewind($this->startByte); $lineIterator->valid(); $lineIterator->next()) {
 
       // Make really sure we've got lines without trailing newlines.
-      $line = trim($lineIterator->current(), "\r\n");
+      $line = trim($this->fixEncoding($lineIterator->current()), "\r\n");
 
       // Skip empty lines.
       if (empty($line)) {
@@ -238,6 +256,7 @@ class ParserCSV {
             // Ok, so, on with fetching the next line, as mentioned above.
             $currentField .= "\n";
             $line = trim($lineIterator->current(), "\r\n");
+//            $line = trim($this->fixEncoding($lineIterator->current()), "\r\n");
             $currentIndex = 0;
             continue;
           }
@@ -324,5 +343,39 @@ class ParserCSV {
       }
     }
     return $rows;
+  }
+
+  /**
+   * Checks and converts encoding of input data
+   *
+   * @param $data
+   *   A chunk of data
+   * @return
+   *   Data in correct encoding or throws exceptions if
+   *   ecnoding doesn't match or mbstring is not found.
+   */
+  private function fixEncoding($data) {
+
+    if (extension_loaded('mbstring')) {
+      // Check encoding if needed
+      if ($this->check_encoding) {
+        if (!mb_check_encoding($data, $this->from_encoding)) {
+          throw new Exception(t('Source file is not in @encoding encoding.', array('@encoding' => $this->from_encoding)));
+        }
+      }
+
+      $encode_array = array('ASCII', 'UTF-8', 'GBK', 'GB2312', 'BIG5');
+      $this->encoding = mb_detect_encoding($data, $encode_array);
+
+      // Convert encoding if needed
+      if ($this->encoding != $this->to_encoding) {
+        $data = mb_convert_encoding($data, $this->to_encoding, $this->encoding);
+      }
+    }
+    else {
+      throw new Exception(t('For encoding conversion <code>mbstring</code> PHP extension must be available.'));
+    }
+
+    return $data;
   }
 }
