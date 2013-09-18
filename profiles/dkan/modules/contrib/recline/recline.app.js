@@ -27,10 +27,9 @@
         state['currentView'] = 'timeline';
       }
       // Checks if dkan_datastore is installed.
-      if (dkan) {
+      if (false) {
         var DKAN_API = '/api/action/datastore/search.json';
         var url = window.location.origin + DKAN_API + '?resource_id=' + uuid;
-        console.log(url);
         var DkanDatastore = false;
         var DkanApi = $.ajax({
           type: 'GET',
@@ -62,13 +61,13 @@
           url: file,
           timeout: 1000,
           success: function(data) {
+            // Changes "^M" to new line if "^M" is present with no lines.
+            if (data.indexOf("\r") != -1 && data.indexOf("\n") == -1) {
+              data = data.replace(/(\r)/g, '\n');
+            }
             var dataset = new recline.Model.Dataset({
-               data: data.replace(/(\rn|\r|\n)/g, '\n'),
-               backend: 'csv',
-               dataType: "text",
+               records: recline.Backend.CSV.parseCSV(data),
             });
-            data = data.replace(/(\rn|\r|\n)/g, '\n');
-            console.log(data);
             dataset.fetch();
             var views = createExplorer(dataset, state);
             // The map needs to get redrawn when we are delivering from the ajax
