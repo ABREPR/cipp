@@ -140,7 +140,11 @@
     }
     if (map) {
       var view = new recline.View.Map({
-          model: dataset
+          model: dataset,
+          state: {
+            lonField: "geo_longitude",
+            latField: "geo_latitude"
+          }
       });
       views.push(
       {
