@@ -30,6 +30,7 @@
       if (dkan) {
         var DKAN_API = '/api/action/datastore/search.json';
         var url = window.location.origin + DKAN_API + '?resource_id=' + uuid;
+        console.log(url);
         var DkanDatastore = false;
         var DkanApi = $.ajax({
           type: 'GET',
@@ -62,9 +63,12 @@
           timeout: 1000,
           success: function(data) {
             var dataset = new recline.Model.Dataset({
-               data: data,
+               data: data.replace(/(\rn|\r|\n)/g, '\n'),
                backend: 'csv',
+               dataType: "text",
             });
+            data = data.replace(/(\rn|\r|\n)/g, '\n');
+            console.log(data);
             dataset.fetch();
             var views = createExplorer(dataset, state);
             // The map needs to get redrawn when we are delivering from the ajax
@@ -156,5 +160,4 @@
     });
     return views;
   }
-
 })(jQuery);
