@@ -8,3 +8,10 @@ dependencies[] = dkan_datastore_api
 dependencies[] = recline
 dependencies[] = services
 version = alpha1
+
+
+; Information added by drush on 2013-09-10
+version = "unknown"
+project = "dkan_datastore"
+datestamp = "1378850380"
+

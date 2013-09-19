@@ -27,7 +27,7 @@ function dkan_dataset_menu() {
     'access arguments' => array('administer content'),
   );
   $items['node/%node/resource'] = array(
-    'title' => 'Add Resoure',
+    'title' => 'Add Resource',
     'page callback' => 'dkan_dataset_add_resource',
     'page arguments' => array(1),
     'access callback' => 'dkan_dataset_add_resource_access',

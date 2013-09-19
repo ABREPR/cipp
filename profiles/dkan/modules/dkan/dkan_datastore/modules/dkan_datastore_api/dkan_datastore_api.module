@@ -255,7 +255,7 @@ function dkan_datastore_api_build_additional_index_query(&$data_select, $table, 
  */
 function dkan_datastore_api_tablename($resource_id) {
   $nid = db_query('SELECT nid FROM {node} WHERE uuid = :uuid', array(':uuid' => $resource_id))->fetchField();
-  $source_id = db_query("SELECT id FROM {feeds_source} WHERE feed_nid = :nid AND source != ''", array(':nid' => $nid))->fetchField();
+  $source_id = dkan_datastore_api_get_feeds_source($nid);
   $table = feeds_flatstore_processor_table_name($source_id, $nid);
   if (db_table_exists($table)) {
     return $table;
@@ -264,7 +264,13 @@ function dkan_datastore_api_tablename($resource_id) {
     throw new Exception('Resource ' . $resource_id . ' does not exist.');
   }
 }
-
+/**
+ * Retrieves source_id from feeds_source.
+ */
+function dkan_datastore_api_get_feeds_source($nid) {
+  $source_id = db_query("SELECT id FROM {feeds_source} WHERE feed_nid = :nid AND source != ''", array(':nid' => $nid))->fetchField();
+  return $source_id ? $source_id : NULL;
+}
 /**
  * Builds index query.
  */

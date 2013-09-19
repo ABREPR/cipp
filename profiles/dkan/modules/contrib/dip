@@ -1,0 +1,406 @@
+diff --git a/profiles/dkan/modules/contrib/feeds/feeds.pages.inc b/profiles/dkan/modules/contrib/feeds/feeds.pages.inc
+index 956d541..2863549 100644
+--- a/profiles/dkan/modules/contrib/feeds/feeds.pages.inc
++++ b/profiles/dkan/modules/contrib/feeds/feeds.pages.inc
+@@ -268,7 +268,6 @@ function feeds_delete_tab_form($form, &$form_state, $importer_id, $node = NULL)
+ function feeds_delete_tab_form_submit($form, &$form_state) {
+   $form_state['redirect'] = $form['#redirect'];
+   $feed_nid = empty($form['#feed_nid']) ? 0 : $form['#feed_nid'];
+-  dpm($form_state);
+   foreach (array_filter($form_state['values']['importer_ids']) as $importer_id) {
+     feeds_source($importer_id, $feed_nid)->startClear();
+   }
+diff --git a/profiles/dkan/modules/contrib/feeds/libraries/ParserCSV.inc b/profiles/dkan/modules/contrib/feeds/libraries/ParserCSV.inc
+index 4ddc77a..2b47d26 100644
+--- a/profiles/dkan/modules/contrib/feeds/libraries/ParserCSV.inc
++++ b/profiles/dkan/modules/contrib/feeds/libraries/ParserCSV.inc
+@@ -76,6 +76,8 @@ class ParserCSV {
+ 
+   public function __construct() {
+     $this->delimiter = ',';
++    $this->from_encoding = $this->to_encoding = $this->encoding = 'UTF-8';
++    $this->check_encoding = FALSE;
+     $this->skipFirstLine = FALSE;
+     $this->columnNames = FALSE;
+     $this->timeout = FALSE;
+@@ -95,6 +97,22 @@ class ParserCSV {
+   }
+ 
+   /**
++   * Set the source file encoding.
++   * By default, UTF-8.
++   */
++  public function setEncoding($encoding) {
++    $this->from_encoding = $encoding;
++  }
++
++  /**
++   * Set the option to check source file encoding.
++   * By default, FALSE.
++   */
++  public function setEncodingCheck($check_encoding) {
++    $this->check_encoding = $check_encoding;
++  }
++
++  /**
+    * Set this to TRUE if the parser should skip the first line of the CSV text,
+    * which might be desired if the first line contains the column names.
+    * By default, this is set to FALSE and the first line is not skipped.
+@@ -197,7 +215,7 @@ class ParserCSV {
+     for ($lineIterator->rewind($this->startByte); $lineIterator->valid(); $lineIterator->next()) {
+ 
+       // Make really sure we've got lines without trailing newlines.
+-      $line = trim($lineIterator->current(), "\r\n");
++      $line = trim($this->fixEncoding($lineIterator->current()), "\r\n");
+ 
+       // Skip empty lines.
+       if (empty($line)) {
+@@ -237,7 +255,7 @@ class ParserCSV {
+             }
+             // Ok, so, on with fetching the next line, as mentioned above.
+             $currentField .= "\n";
+-            $line = trim($lineIterator->current(), "\r\n");
++            $line = trim($this->fixEncoding($lineIterator->current()), "\r\n");
+             $currentIndex = 0;
+             continue;
+           }
+@@ -325,4 +343,38 @@ class ParserCSV {
+     }
+     return $rows;
+   }
++
++  /**
++   * Checks and converts encoding of input data
++   *
++   * @param $data
++   *   A chunk of data
++   * @return
++   *   Data in correct encoding or throws exceptions if
++   *   ecnoding doesn't match or mbstring is not found.
++   */
++  private function fixEncoding($data) {
++
++    if (extension_loaded('mbstring')) {
++      // Check encoding if needed
++      if ($this->check_encoding) {
++        if (!mb_check_encoding($data, $this->from_encoding)) {
++          throw new Exception(t('Source file is not in @encoding encoding.', array('@encoding' => $this->from_encoding)));
++        }
++      }
++
++      $encode_array = array('ASCII', 'UTF-8', 'GBK', 'GB2312', 'BIG5');
++      $this->encoding = mb_detect_encoding($data, $encode_array);
++
++      // Convert encoding if needed
++      if ($this->encoding != $this->to_encoding) {
++        $data = mb_convert_encoding($data, $this->to_encoding, $this->encoding);
++      }
++    }
++    else {
++      throw new Exception(t('For encoding conversion <code>mbstring</code> PHP extension must be available.'));
++    }
++
++    return $data;
++  }
+ }
+diff --git a/profiles/dkan/modules/contrib/feeds/plugins/FeedsCSVParser.inc b/profiles/dkan/modules/contrib/feeds/plugins/FeedsCSVParser.inc
+index 7044440..991753e 100644
+--- a/profiles/dkan/modules/contrib/feeds/plugins/FeedsCSVParser.inc
++++ b/profiles/dkan/modules/contrib/feeds/plugins/FeedsCSVParser.inc
+@@ -22,6 +22,8 @@ class FeedsCSVParser extends FeedsParser {
+     $parser = new ParserCSV();
+     $delimiter = $source_config['delimiter'] == 'TAB' ? "\t" : $source_config['delimiter'];
+     $parser->setDelimiter($delimiter);
++    $parser->setEncoding($source_config['encoding']['encoding']);
++    $parser->setEncodingCheck($source_config['encoding']['check_encoding']);
+ 
+     $iterator = new ParserCSVIterator($fetcher_result->getFilePath());
+     if (empty($source_config['no_headers'])) {
+@@ -106,6 +108,8 @@ class FeedsCSVParser extends FeedsParser {
+   public function sourceDefaults() {
+     return array(
+       'delimiter' => $this->config['delimiter'],
++      'encoding' => $this->config['encoding'],
++      'check_encoding' => $this->config['check_encoding'],
+       'no_headers' => $this->config['no_headers'],
+     );
+   }
+@@ -164,7 +168,75 @@ class FeedsCSVParser extends FeedsParser {
+       '#description' => t('Check if the imported CSV file does not start with a header row. If checked, mapping sources must be named \'0\', \'1\', \'2\' etc.'),
+       '#default_value' => isset($source_config['no_headers']) ? $source_config['no_headers'] : 0,
+     );
+-    return $form;
++    return $form + $this->configEncodingForm();
++  }
++
++  public function configEncodingForm($sourceForm = FALSE) {
++    $form = array();
++    $defaults = $this->configDefaults();
++    if (extension_loaded('mbstring')) {
++      $form['encoding'] = array(
++        '#type' => 'fieldset',
++        '#title' => 'Encoding conversion',
++        '#collapsible' => TRUE,
++        '#collapsed' => $sourceForm || ($this->config['encoding'] == $defaults['encoding'] && $this->config['check_encoding'] == $defaults['check_encoding']),
++      );
++      $options = mb_list_encodings();
++      $options = array_combine($options, $options);
++      $form['encoding']['encoding'] = array(
++        '#type' => 'select',
++        '#title' => t('Source file encoding'),
++        '#description' => t('Performs encoding conversion of a source files to UTF-8. Defaults to <code>UTF-8</code> &mdash; no encoding conversion will happen.'),
++        '#options' => $options,
++        '#default_value' => $this->config['encoding'],
++      );
++      $form['encoding']['check_encoding'] = array(
++        '#type' => 'checkbox',
++        '#title' => t('Check encoding'),
++        '#description' => t('Checks encoding of a source file and breaks import process if encoding differs.'),
++        '#default_value' => $this->config['check_encoding'],
++      );
++    }
++    else {
++      $form['encoding']['encoding'] = array(
++        '#markup' => '<p><em>' . t('Encoding conversion is disabled due to the lack of <code>mbstring</code> PHP extension.') . '</em></p>',
++      );
++    }
++     return $form;
++   }
++
++  /**
++   * Checks and converts encoding of input data
++   *
++   * @param $data
++   *   A chunk of data
++   * @return
++   *   Data in correct encoding or throws exceptions if
++   *   ecnoding doesn't match or mbstring is not found.
++   */
++  private function fixEncoding($data) {
++
++    if (extension_loaded('mbstring')) {
++      // Check encoding if needed
++      if ($this->check_encoding) {
++        if (!mb_check_encoding($data, $this->from_encoding)) {
++          throw new Exception(t('Source file is not in @encoding encoding.', array('@encoding' => $this->from_encoding)));
++        }
++      }
++
++      $encode_array = array('ASCII', 'UTF-8', 'GBK', 'GB2312', 'BIG5');
++      $this->encoding = mb_detect_encoding($data, $encode_array);
++
++      // Convert encoding if needed
++      if ($this->encoding != $this->to_encoding) {
++        $data = mb_convert_encoding($data, $this->to_encoding, $this->encoding);
++      }
++    }
++    else {
++      throw new Exception(t('For encoding conversion <code>mbstring</code> PHP extension must be available.'));
++    }
++
++    return $data;
+   }
+ 
+   /**
+@@ -173,6 +245,8 @@ class FeedsCSVParser extends FeedsParser {
+   public function configDefaults() {
+     return array(
+       'delimiter' => ',',
++      'encoding' => 'UTF-8',
++      'check_encoding' => FALSE,
+       'no_headers' => 0,
+     );
+   }
+diff --git a/profiles/dkan/modules/contrib/feeds/plugins/FeedsNodeProcessor.inc b/profiles/dkan/modules/contrib/feeds/plugins/FeedsNodeProcessor.inc
+index bd7bf78..f2db596 100644
+--- a/profiles/dkan/modules/contrib/feeds/plugins/FeedsNodeProcessor.inc
++++ b/profiles/dkan/modules/contrib/feeds/plugins/FeedsNodeProcessor.inc
+@@ -235,36 +235,31 @@ class FeedsNodeProcessor extends FeedsProcessor {
+    * Override setTargetElement to operate on a target item that is a node.
+    */
+   public function setTargetElement(FeedsSource $source, $target_node, $target_element, $value) {
+-    if ($ids = feeds_get_importer_ids($this->config['content_type'], $source->feed_nid)) {
+-      foreach ($ids as $id) {
+-        if ($target_element == 'feeds_source_' . $id) {
+-          // Get the class of the feed node importer's fetcher and set the source
+-          // property. See feeds_node_update() how $node->feeds gets stored.
++    switch ($target_element) {
++      case 'created':
++        $target_node->created = feeds_to_unixtime($value, REQUEST_TIME);
++        break;
++      case 'feeds_source':
++        // Get the class of the feed node importer's fetcher and set the source
++        // property. See feeds_node_update() how $node->feeds gets stored.
++        if ($id = feeds_get_importer_id($this->bundle())) {
+           $class = get_class(feeds_importer($id)->fetcher);
+-          $target_node->feeds[$id][$class]['source'] = $value;
++          $target_node->feeds[$class]['source'] = $value;
+           // This effectively suppresses 'import on submission' feature.
+           // See feeds_node_insert().
+-          $target_node->feeds[$id]['suppress_import'] = TRUE;
++          $target_node->feeds['suppress_import'] = TRUE;
+         }
+-      }
+-    }
+-    switch ($target_element) {
+-      case 'created':
+-        $target_node->created = feeds_to_unixtime($value, REQUEST_TIME);
+         break;
+-
+       case 'user_name':
+         if ($user = user_load_by_name($value)) {
+           $target_node->uid = $user->uid;
+         }
+         break;
+-
+       case 'user_mail':
+         if ($user = user_load_by_mail($value)) {
+           $target_node->uid = $user->uid;
+         }
+         break;
+-
+       default:
+         parent::setTargetElement($source, $target_node, $target_element, $value);
+         break;
+@@ -336,15 +331,13 @@ class FeedsNodeProcessor extends FeedsProcessor {
+     }
+ 
+     // If the target content type is a Feed node, expose its source field.
+-    if ($ids = feeds_get_importer_ids($this->config['bundle'])) {
+-      foreach ($ids as $id) {
+-        $name = feeds_importer($id)->config['name'];
+-        $targets['feeds_source_' . $id] = array(
+-          'name' => t('Feed source'),
+-          'description' => t('The content type created by this processor is a Feed Node, it represents a source itself. Depending on the fetcher selected on the importer "@importer", this field is expected to be for example a URL or a path to a file.', array('@importer' => $name)),
+-          'optional_unique' => TRUE,
+-        );
+-      }
++    if ($id = feeds_get_importer_id($this->bundle())) {
++      $name = feeds_importer($id)->config['name'];
++      $targets['feeds_source'] = array(
++        'name' => t('Feed source'),
++        'description' => t('The content type created by this processor is a Feed Node, it represents a source itself. Depending on the fetcher selected on the importer "@importer", this field is expected to be for example a URL or a path to a file.', array('@importer' => $name)),
++        'optional_unique' => TRUE,
++      );
+     }
+ 
+     // Let other modules expose mapping targets.
+@@ -359,7 +352,7 @@ class FeedsNodeProcessor extends FeedsProcessor {
+   /**
+    * Get nid of an existing feed item node if available.
+    */
+-  function existingEntityId(FeedsSource $source, FeedsParserResult $result) {
++  protected function existingEntityId(FeedsSource $source, FeedsParserResult $result) {
+     if ($nid = parent::existingEntityId($source, $result)) {
+       return $nid;
+     }
+@@ -374,13 +367,11 @@ class FeedsNodeProcessor extends FeedsProcessor {
+         case 'title':
+           $nid = db_query("SELECT nid FROM {node} WHERE title = :title AND type = :type", array(':title' => $value, ':type' => $this->bundle()))->fetchField();
+           break;
+-      }
+-      if ($ids = feeds_get_importer_ids($this->config['content_type'])) {
+-        foreach ($ids as $id) {
+-          if ($target == 'feeds_source_' . $id) {
++        case 'feeds_source':
++          if ($id = feeds_get_importer_id($this->bundle())) {
+             $nid = db_query("SELECT fs.feed_nid FROM {node} n JOIN {feeds_source} fs ON n.nid = fs.feed_nid WHERE fs.id = :id AND fs.source = :source", array(':id' => $id, ':source' => $value))->fetchField();
+           }
+-        }
++          break;
+       }
+       if ($nid) {
+         // Return with the first nid found.
+diff --git a/profiles/dkan/modules/contrib/feeds/plugins/FeedsProcessor.inc b/profiles/dkan/modules/contrib/feeds/plugins/FeedsProcessor.inc
+index d90e544..aea7df6 100644
+--- a/profiles/dkan/modules/contrib/feeds/plugins/FeedsProcessor.inc
++++ b/profiles/dkan/modules/contrib/feeds/plugins/FeedsProcessor.inc
+@@ -183,8 +183,6 @@ abstract class FeedsProcessor extends FeedsPlugin {
+       $entity_id = $this->existingEntityId($source, $parser_result);
+       $skip_existing = $this->config['update_existing'] == FEEDS_SKIP_EXISTING;
+ 
+-      module_invoke_all('feeds_before_update', $source, $item, $entity_id);
+-
+       // If it exists, and we are not updating, pass onto the next item.
+       if ($entity_id && $skip_existing) {
+         continue;
+@@ -210,7 +208,6 @@ abstract class FeedsProcessor extends FeedsPlugin {
+           // recently processed entity. The only carryover is the entity_id.
+           $this->newItemInfo($entity, $source->feed_nid, $hash);
+           $entity->feeds_item->entity_id = $entity_id;
+-          $entity->feeds_item->is_new = FALSE;
+         }
+ 
+         // Build a new entity.
+@@ -224,7 +221,7 @@ abstract class FeedsProcessor extends FeedsPlugin {
+         $this->entityValidate($entity);
+ 
+         // Allow modules to alter the entity before saving.
+-        module_invoke_all('feeds_presave', $source, $entity, $item, $entity_id);
++        module_invoke_all('feeds_presave', $source, $entity, $item);
+         if (module_exists('rules')) {
+           rules_invoke_event('feeds_import_'. $source->importer()->id, $entity);
+         }
+@@ -238,10 +235,6 @@ abstract class FeedsProcessor extends FeedsPlugin {
+         $this->entitySaveAccess($entity);
+         $this->entitySave($entity);
+ 
+-        // Allow modules to perform operations using the saved entity data.
+-        // $entity contains the updated entity after saving.
+-        module_invoke_all('feeds_after_save', $source, $entity, $item, $entity_id);
+-
+         // Track progress.
+         if (empty($entity_id)) {
+           $state->created++;
+@@ -255,7 +248,11 @@ abstract class FeedsProcessor extends FeedsPlugin {
+       catch (Exception $e) {
+         $state->failed++;
+         drupal_set_message($e->getMessage(), 'warning');
+-        $message = $this->createLogMessage($e, $entity, $item);
++        $message = $e->getMessage();
++        $message .= '<h3>Original item</h3>';
++        $message .= '<pre>' . var_export($item, TRUE) . '</pre>';
++        $message .= '<h3>Entity</h3>';
++        $message .= '<pre>' . var_export($entity, TRUE) . '</pre>';
+         $source->log('import', $message, array(), WATCHDOG_ERROR);
+       }
+     }
+@@ -726,7 +723,6 @@ abstract class FeedsProcessor extends FeedsPlugin {
+    */
+   protected function newItemInfo($entity, $feed_nid, $hash = '') {
+     $entity->feeds_item = new stdClass();
+-    $entity->feeds_item->is_new = TRUE;
+     $entity->feeds_item->entity_id = 0;
+     $entity->feeds_item->entity_type = $this->entityType();
+     $entity->feeds_item->id = $this->id;
+@@ -784,30 +780,6 @@ abstract class FeedsProcessor extends FeedsPlugin {
+     }
+     return '';
+   }
+-
+-  /**
+-   * Creates a log message for when an exception occured during import.
+-   *
+-   * @param Exception $e
+-   *   The exception that was throwned during processing the item.
+-   * @param $entity
+-   *   The entity object.
+-   * @param $item
+-   *   The parser result for this entity.
+-   *
+-   * @return string
+-   *   The message to log.
+-   */
+-  protected function createLogMessage(Exception $e, $entity, $item) {
+-    include_once DRUPAL_ROOT . '/includes/utility.inc';
+-    $message = $e->getMessage();
+-    $message .= '<h3>Original item</h3>';
+-    $message .= '<pre>' . drupal_var_export($item). '</pre>';
+-    $message .= '<h3>Entity</h3>';
+-    $message .= '<pre>' . drupal_var_export($entity) . '</pre>';
+-    return $message;
+-  }
+-
+ }
+ 
+ class FeedsProcessorBundleNotDefined extends Exception {}

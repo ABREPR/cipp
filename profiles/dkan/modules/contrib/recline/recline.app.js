@@ -27,7 +27,7 @@
         state['currentView'] = 'timeline';
       }
       // Checks if dkan_datastore is installed.
-      if (false) {
+      if (dkan) {
         var DKAN_API = '/api/action/datastore/search.json';
         var url = window.location.origin + DKAN_API + '?resource_id=' + uuid;
         var DkanDatastore = false;
