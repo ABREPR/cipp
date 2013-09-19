@@ -477,7 +477,6 @@ p {
 #field-tags-wrapper .path-form label,
 #edit-path label,
 .form-item-field-tags-und label,
-#edit-field-format label,
 #edit-field-tags-und label {
   width: auto;
   text-align: left;
@@ -628,12 +627,16 @@ textarea:focus, input:focus {
     }
 	}
 	#blog-node-form {
+    .form-item-title input {
+      width: 515px;
+      height: 30px;
+      margin-bottom: 5px;
+    }
 		#edit-field-tags {
-			padding-bottom:20px;
+			padding-bottom: 5px;
 			.form-item-field-tags-und .description {
 			    font-size: 0.85em !important;
 			    left: 50px;
-			    top: 26px;
 			    color: #6A6A6A;
 			}
 		}
@@ -754,5 +757,30 @@ body.page-blog {
   height: 25px;
 }
 li.service-links-twitter-widget {
-  width: 75px;
+  width: 90px;
+}
+.node-resource-form .field-name-field-format .autocomplete-deluxe-container {
+  width: 515px;
+  float: right;
+  margin: 0 0 20px 0;
+}
+.field-name-field-dataset-ref {
+  padding-top: 10px;
+  clear: both;
+}
+.node-resource-form .field-name-field-format label {
+  margin: 10px 0 0px 0;
+}
+.chzn-container-multi .chzn-choices .search-field .default {
+  color: #777;
+  padding: 3px;
+  height: 25px;
+  margin-left: 5px;
+  font-size: .9em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.chzn-container-multi .chzn-choices {
+  border-radius: 5px;
+  width: 515px;
+  border: 1px solid #CCC;
 }
