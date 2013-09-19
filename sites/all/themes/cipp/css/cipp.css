@@ -128,7 +128,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 
 .view-faq .field-name-body { margin: .5em 0 1.5em 1em; }
 
-#field-tags-wrapper .path-form label, #edit-path label, .form-item-field-tags-und label, #edit-field-format label, #edit-field-tags-und label { width: auto; text-align: left; }
+#field-tags-wrapper .path-form label, #edit-path label, .form-item-field-tags-und label, #edit-field-tags-und label { width: auto; text-align: left; }
 
 .form-item-field-tags-und label { margin-top: 5px; }
 
@@ -163,8 +163,9 @@ textarea:focus, input:focus { border-color: #31aae1; }
 .page-node-add #dataset-node-form #node_dataset_form_group_additional, .page-node-add #resource-node-form #node_dataset_form_group_additional, .page-node-edit #dataset-node-form #node_dataset_form_group_additional, .page-node-edit #resource-node-form #node_dataset_form_group_additional { margin-top: 15px; padding-top: 5px; }
 .page-node-add #dataset-node-form .chzn-container-multi .chzn-choices, .page-node-add #resource-node-form .chzn-container-multi .chzn-choices, .page-node-edit #dataset-node-form .chzn-container-multi .chzn-choices, .page-node-edit #resource-node-form .chzn-container-multi .chzn-choices { border-radius: 5px; }
 .page-node-add #dataset-node-form .chzn-container-multi .chzn-choices input, .page-node-add #resource-node-form .chzn-container-multi .chzn-choices input, .page-node-edit #dataset-node-form .chzn-container-multi .chzn-choices input, .page-node-edit #resource-node-form .chzn-container-multi .chzn-choices input { width: 144px; padding: 0px; font-size: 12px; margin: 5px; color: #777777; }
-.page-node-add #blog-node-form #edit-field-tags, .page-node-edit #blog-node-form #edit-field-tags { padding-bottom: 20px; }
-.page-node-add #blog-node-form #edit-field-tags .form-item-field-tags-und .description, .page-node-edit #blog-node-form #edit-field-tags .form-item-field-tags-und .description { font-size: 0.85em !important; left: 50px; top: 26px; color: #6A6A6A; }
+.page-node-add #blog-node-form .form-item-title input, .page-node-edit #blog-node-form .form-item-title input { width: 515px; height: 30px; margin-bottom: 5px; }
+.page-node-add #blog-node-form #edit-field-tags, .page-node-edit #blog-node-form #edit-field-tags { padding-bottom: 5px; }
+.page-node-add #blog-node-form #edit-field-tags .form-item-field-tags-und .description, .page-node-edit #blog-node-form #edit-field-tags .form-item-field-tags-und .description { font-size: 0.85em !important; left: 50px; color: #6A6A6A; }
 .page-node-add #blog-node-form input.form-autocomplete, .page-node-edit #blog-node-form input.form-autocomplete { background-position: 99% 5px; }
 
 #section-footer { background-color: #d4d4d4; background-image: none; color: #4d4d4d; text-align: center; margin-top: 1.5em; filter: none; }
@@ -197,3 +198,13 @@ body.page-blog .block-facetapi li { list-style: none; }
 .service-links ul { margin: 0; padding: 10px 0; height: 25px; }
 
 li.service-links-twitter-widget { width: 75px; }
+
+.node-resource-form .field-name-field-format .autocomplete-deluxe-container { width: 515px; float: right; margin: 0 0 20px 0; }
+
+.field-name-field-dataset-ref { padding-top: 10px; clear: both; }
+
+.node-resource-form .field-name-field-format label { margin: 10px 0 0px 0; }
+
+.chzn-container-multi .chzn-choices .search-field .default { color: #777; padding: 3px; height: 25px; margin-left: 5px; font-size: .9em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+.chzn-container-multi .chzn-choices { border-radius: 5px; width: 515px; border: 1px solid #CCC; }
