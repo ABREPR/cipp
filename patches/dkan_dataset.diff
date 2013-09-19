@@ -1,0 +1,105 @@
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.forms.inc b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.forms.inc
+index a650183..ba2aceb 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.forms.inc
++++ b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.forms.inc
+@@ -395,8 +395,7 @@ function dkan_dataset_resource_another_submit_js($form, &$form_state) {
+   $commands[] = ajax_command_replace('.node-resource-form', drupal_render($resource_form));
+   $commands[] = ajax_command_prepend('ul.nav-simple', '<li>' . l($form_state['values']['title'], 'node/' . $form_state['nid'] . '/edit') . '</li>');
+   $commands[] = ajax_command_prepend('form.node-form', $message);
+-  $lang = $form['language']['#value'];
+-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
++  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $nid)), TRUE);
+   $output = array('#type' => 'ajax', '#commands' => $commands);
+   return $output;
+ }
+@@ -422,8 +421,7 @@ function dkan_dataset_dataset_submit_js($form, &$form_state) {
+   $commands[] = ajax_command_replace('#block-dkan-forms-dkan-forms-dataset-help .content', '<div class="content">' . dkan_dataset_resource_form_help() . '</div>');
+   $commands[] = ajax_command_replace('ol.stages', $stage);
+   $commands[] = ajax_command_replace('#page-title', '<h1 class="title" id="page-title">Add data</h1>');
+-  $lang = $form['language']['#value'];
+-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
++  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid)), TRUE);
+ 
+   $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
+   $output = array('#type' => 'ajax', '#commands' => $commands);
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.info b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.info
+index c569c70..490745f 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.info
++++ b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.info
+@@ -24,6 +24,8 @@ dependencies[] = libraries
+ dependencies[] = link
+ dependencies[] = link_iframe_formatter
+ dependencies[] = multistep
++dependencies[] = og
++dependencies[] = og_extras
+ dependencies[] = rdfx
+ dependencies[] = ref_field_sync
+ dependencies[] = remote_file_source
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.module b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.module
+index 50ac392..159c5e6 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.module
++++ b/profiles/dkan/modules/dkan/dkan_dataset/dkan_dataset.module
+@@ -17,15 +17,6 @@ include_once 'dkan_dataset.forms.inc';
+  */
+ function dkan_dataset_menu() {
+   $path = drupal_get_path('module', 'dkan_datset');
+-  $items['admin/config/content/dkan_forms'] = array(
+-    'title' => 'DKAN forms',
+-    'description' => 'Configuration options for DKAN forms.',
+-    'file' => 'dkan_dataset.forms.inc',
+-    'page arguments' => array('dkan_dataset_forms_setting_form'),
+-    'page callback' => 'drupal_get_form',
+-    'access callback' => 'user_access',
+-    'access arguments' => array('administer content'),
+-  );
+   $items['node/%node/resource'] = array(
+     'title' => 'Add Resource',
+     'page callback' => 'dkan_dataset_add_resource',
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.js b/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.js
+index f006da3..53c0263 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.js
++++ b/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.js
+@@ -75,7 +75,7 @@
+       if (settings.dkanPush && context.context) {
+         var pos = $('#page').offset();
+         $('html, body').animate({ scrollTop: pos.top}, 'fast');
+-        window.history.pushState("", "", '/' + settings.dkanPush.lang + '/node/add/resource?dataset=' + settings.dkanPush.nid);
++        window.history.pushState("", "", '/node/add/resource?dataset=' + settings.dkanPush.nid);
+         // Make sure this doesn't fire again.
+         delete settings.dkanPush;
+       }
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.slugify.js b/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.slugify.js
+index a995db2..72c996d 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.slugify.js
++++ b/profiles/dkan/modules/dkan/dkan_dataset/js/dkan_forms.slugify.js
+@@ -17,7 +17,6 @@
+ 
+   Drupal.behaviors.dkanFormsSlugify = {
+     attach: function (context, settings) {
+-      console.log(context);
+       // Slugify!
+       if ($('#edit-path-alias').val() != '') {
+         $('#url-edit-preview').hide();
+@@ -30,10 +29,6 @@
+         // Force URLs to be url friendly.
+         $('#edit-path-alias').slugify('#edit-path-alias');
+         // Only edit path alias if alias has not been edited.
+-        $('.field-name-title-field input').click(function(e) {
+-          $('#edit-path-alias').slugify($(this));
+-          $('#url-slug').slugify($(this));
+-        });
+         $('.form-item-title input').click(function(e) {
+           $('#edit-path-alias').slugify($(this));
+           $('#url-slug').slugify($(this));
+diff --git a/profiles/dkan/modules/dkan/dkan_dataset/modules/dkan_dataset_content_types/dkan_dataset_content_types.info b/profiles/dkan/modules/dkan/dkan_dataset/modules/dkan_dataset_content_types/dkan_dataset_content_types.info
+index df9ee83..fc33e04 100644
+--- a/profiles/dkan/modules/dkan/dkan_dataset/modules/dkan_dataset_content_types/dkan_dataset_content_types.info
++++ b/profiles/dkan/modules/dkan/dkan_dataset/modules/dkan_dataset_content_types/dkan_dataset_content_types.info
+@@ -17,6 +17,7 @@ dependencies[] = leaflet_widget
+ dependencies[] = link_iframe_formatter
+ dependencies[] = list
+ dependencies[] = node
++dependencies[] = og
+ dependencies[] = options
+ dependencies[] = recline
+ dependencies[] = select_or_other

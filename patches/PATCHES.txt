@@ -1,2 +1,5 @@
 projects[taxonomy_to_apachesolr_link][subdir] = contrib
 projects[taxonomy_to_apachesolr_link][patch][1931862] = https://drupal.org/files/facetapi-for-taxonomy-links.patch 
+
+projects[dkan_dataset] = dkan_dataset.diff
+projects[dkan_sitewide] = dkan_sitewide.diff
