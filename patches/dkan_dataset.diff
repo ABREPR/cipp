@@ -6,9 +6,9 @@ index a650183..ba2aceb 100644
    $commands[] = ajax_command_replace('.node-resource-form', drupal_render($resource_form));
    $commands[] = ajax_command_prepend('ul.nav-simple', '<li>' . l($form_state['values']['title'], 'node/' . $form_state['nid'] . '/edit') . '</li>');
    $commands[] = ajax_command_prepend('form.node-form', $message);
--  $lang = $form['language']['#value'];
--  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
-+  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $nid)), TRUE);
++  $lang = $form['language']['#value'];
++  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
+-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $nid)), TRUE);
    $output = array('#type' => 'ajax', '#commands' => $commands);
    return $output;
  }
@@ -16,9 +16,9 @@ index a650183..ba2aceb 100644
    $commands[] = ajax_command_replace('#block-dkan-forms-dkan-forms-dataset-help .content', '<div class="content">' . dkan_dataset_resource_form_help() . '</div>');
    $commands[] = ajax_command_replace('ol.stages', $stage);
    $commands[] = ajax_command_replace('#page-title', '<h1 class="title" id="page-title">Add data</h1>');
--  $lang = $form['language']['#value'];
--  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
-+  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid)), TRUE);
++  $lang = $form['language']['#value'];
++  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $lang)), TRUE);
+-  $commands[] = ajax_command_settings(array('dkanPush' => array('nid' => $form_state['node']->nid)), TRUE);
  
    $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
    $output = array('#type' => 'ajax', '#commands' => $commands);
@@ -30,8 +30,8 @@ index c569c70..490745f 100644
  dependencies[] = link
  dependencies[] = link_iframe_formatter
  dependencies[] = multistep
-+dependencies[] = og
-+dependencies[] = og_extras
+-dependencies[] = og
+-dependencies[] = og_extras
  dependencies[] = rdfx
  dependencies[] = ref_field_sync
  dependencies[] = remote_file_source
@@ -43,15 +43,15 @@ index 50ac392..159c5e6 100644
   */
  function dkan_dataset_menu() {
    $path = drupal_get_path('module', 'dkan_datset');
--  $items['admin/config/content/dkan_forms'] = array(
--    'title' => 'DKAN forms',
--    'description' => 'Configuration options for DKAN forms.',
--    'file' => 'dkan_dataset.forms.inc',
--    'page arguments' => array('dkan_dataset_forms_setting_form'),
--    'page callback' => 'drupal_get_form',
--    'access callback' => 'user_access',
--    'access arguments' => array('administer content'),
--  );
++  $items['admin/config/content/dkan_forms'] = array(
++    'title' => 'DKAN forms',
++    'description' => 'Configuration options for DKAN forms.',
++    'file' => 'dkan_dataset.forms.inc',
++    'page arguments' => array('dkan_dataset_forms_setting_form'),
++    'page callback' => 'drupal_get_form',
++    'access callback' => 'user_access',
++    'access arguments' => array('administer content'),
++  );
    $items['node/%node/resource'] = array(
      'title' => 'Add Resource',
      'page callback' => 'dkan_dataset_add_resource',
@@ -63,8 +63,8 @@ index f006da3..53c0263 100644
        if (settings.dkanPush && context.context) {
          var pos = $('#page').offset();
          $('html, body').animate({ scrollTop: pos.top}, 'fast');
--        window.history.pushState("", "", '/' + settings.dkanPush.lang + '/node/add/resource?dataset=' + settings.dkanPush.nid);
-+        window.history.pushState("", "", '/node/add/resource?dataset=' + settings.dkanPush.nid);
++        window.history.pushState("", "", '/' + settings.dkanPush.lang + '/node/add/resource?dataset=' + settings.dkanPush.nid);
+-        window.history.pushState("", "", '/node/add/resource?dataset=' + settings.dkanPush.nid);
          // Make sure this doesn't fire again.
          delete settings.dkanPush;
        }
@@ -76,7 +76,7 @@ index a995db2..72c996d 100644
  
    Drupal.behaviors.dkanFormsSlugify = {
      attach: function (context, settings) {
--      console.log(context);
++      console.log(context);
        // Slugify!
        if ($('#edit-path-alias').val() != '') {
          $('#url-edit-preview').hide();
@@ -84,10 +84,10 @@ index a995db2..72c996d 100644
          // Force URLs to be url friendly.
          $('#edit-path-alias').slugify('#edit-path-alias');
          // Only edit path alias if alias has not been edited.
--        $('.field-name-title-field input').click(function(e) {
--          $('#edit-path-alias').slugify($(this));
--          $('#url-slug').slugify($(this));
--        });
++        $('.field-name-title-field input').click(function(e) {
++          $('#edit-path-alias').slugify($(this));
++          $('#url-slug').slugify($(this));
++        });
          $('.form-item-title input').click(function(e) {
            $('#edit-path-alias').slugify($(this));
            $('#url-slug').slugify($(this));
@@ -99,7 +99,7 @@ index df9ee83..fc33e04 100644
  dependencies[] = link_iframe_formatter
  dependencies[] = list
  dependencies[] = node
-+dependencies[] = og
+-dependencies[] = og
  dependencies[] = options
  dependencies[] = recline
  dependencies[] = select_or_other
