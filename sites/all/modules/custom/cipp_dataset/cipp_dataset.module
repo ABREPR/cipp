@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Overrides to DKAN Dataset.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function cipp_dataset_form_resource_node_form_alter(&$form, $form_state, $form_id) {
+  // We are not breaking up the dataset node form.
+  unset($form['actions']['additional']);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function cipp_dataset_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter') {
+    $group = $implementations['cipp_dataset'];
+    unset($implementations['cipp_dataset']);
+    $implementations['cipp_dataset'] = $group;
+  }
+}

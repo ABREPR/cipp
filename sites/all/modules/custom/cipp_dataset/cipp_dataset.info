@@ -1,0 +1,6 @@
+name = Cipp DKAN Dataset
+description = Module for DKAN dataset that have been overridden.
+core = 7.x
+package = CIPP Features
+version = 7.x-1.0
+project = cipp_overrides
