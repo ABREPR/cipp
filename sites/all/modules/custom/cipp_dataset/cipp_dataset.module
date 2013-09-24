@@ -18,8 +18,10 @@ function cipp_dataset_form_resource_node_form_alter(&$form, $form_state, $form_i
  */
 function cipp_dataset_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter') {
-    $group = $implementations['cipp_dataset'];
-    unset($implementations['cipp_dataset']);
-    $implementations['cipp_dataset'] = $group;
+    if (isset($implementations['cipp_dataset'])) {
+      $group = $implementations['cipp_dataset'];
+      unset($implementations['cipp_dataset']);
+      $implementations['cipp_dataset'] = $group;
+    }
   }
 }
