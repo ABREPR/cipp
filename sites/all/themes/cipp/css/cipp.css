@@ -197,7 +197,7 @@ body.page-blog .block-facetapi li { list-style: none; }
 
 .service-links ul { margin: 0; padding: 10px 0; height: 25px; }
 
-li.service-links-twitter-widget { width: 75px; }
+li.service-links-twitter-widget { width: 90px; }
 
 .node-resource-form .field-name-field-format .autocomplete-deluxe-container { width: 515px; float: right; margin: 0 0 20px 0; }
 
@@ -208,3 +208,7 @@ li.service-links-twitter-widget { width: 75px; }
 .chzn-container-multi .chzn-choices .search-field .default { color: #777; padding: 3px; height: 25px; margin-left: 5px; font-size: .9em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 .chzn-container-multi .chzn-choices { border-radius: 5px; width: 515px; border: 1px solid #CCC; }
+
+#field-tags-wrapper { display: block; clear: both; }
+
+.count-resource { font-weight: bold; padding: 0 5px 0 0; }
