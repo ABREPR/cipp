@@ -52,17 +52,25 @@ function dkan_datastore_datastore_api($node) {
  * Callback for download tab.
  */
 function dkan_datastore_download($node) {
-  $uri = isset($node->field_upload[DKAN_FIELD_LANG][0]['uri']) ? $node->field_upload[DKAN_FIELD_LANG][0]['uri'] : $node->field_upload[0]['uri'];
-  $url = file_create_url($uri);
-  return drupal_goto($url);
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  if ($node_wrapper->field_upload->value()) {
+    $url = file_create_url($node_wrapper->field_upload->value()->uri);
+    return drupal_goto($url);
+  }
+  else {
+    drupal_set_message(t('No download available for this resource'));
+    return '';
+  }
 }
 
 /**
  * Callback for back link.
  */
 function dkan_datastore_back($node) {
-  if (isset($node->field_dataset_ref[DKAN_FIELD_LANG][0]['target_id'])) {
-    drupal_goto('node/' . $node->field_dataset_ref[DKAN_FIELD_LANG][0]['target_id']);
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  $dataset = $node_wrapper->field_dataset_ref->value();
+  if ($dataset) {
+    drupal_goto('node/' . $dataset->nid);
   }
   return '';
 }
@@ -96,20 +104,26 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
     $form = confirm_form($form, t('Import all content from source?'), 'node/' . $node->nid, '', t('Import'), t('Cancel'), 'confirm feeds update');
     foreach ($importer_ids as $importer_id => $weight) {
       $source = feeds_source($importer_id, $node->nid);
-      $form[$importer_id]['source_status'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('@source_name', array('@source_name' => $source->importer->config['name'])),
-        '#tree' => TRUE,
-        '#value' => feeds_source_status($source),
-      );
-      $form[$importer_id]['#count'] = $source->itemCount();
-      $progress = $source->progressImporting();
-      $total_progress += $progress;
+      $source_input = isset($source->config[$source->importer->config['fetcher']['plugin_key']]['source']) ? $source->config[$source->importer->config['fetcher']['plugin_key']]['source'] : '';
+      if ($source_input) {
+        $form[$importer_id]['source_status'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('@source_name', array('@source_name' => $source->importer->config['name'])),
+          '#tree' => TRUE,
+          '#value' => feeds_source_status($source),
+        );
+        $form[$importer_id]['#count'] = $source->itemCount();
+        $progress = $source->progressImporting();
+        $total_progress += $progress;
+      }
+      else {
+        unset($importer_ids[$importer_id]);
+      }
     }
     if (count($importer_ids) == 1) {
       $form['importer_ids'] = array(
         '#type' => 'value',
-        '#value' => array($importer_id),
+        '#value' => $importer_ids,
       );
     }
     else {
@@ -131,8 +145,7 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
       $progress = $total_progress / count($importer_ids);
       if ($progress !== FEEDS_BATCH_COMPLETE) {
         $form['actions']['submit']['#disabled'] = TRUE;
-        $form['actions']['submit']['#value'] =
-          t('Importing (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
+        $form['actions']['submit']['#value'] = t('Importing (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
       }
     }
   }

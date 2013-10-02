@@ -17,7 +17,7 @@ function recline_field_info() {
         'uri_scheme' => variable_get('file_default_scheme', 'public'),
       ),
       'instance_settings' => array(
-        'file_extensions' => 'csv, xml',
+        'file_extensions' => 'csv',
         'file_directory' => '',
         'max_filesize' => '',
         'title_field' => 0,
@@ -37,7 +37,7 @@ function recline_field_formatter_info() {
   $formatters = array(
     'recline_default_formatter' => array(
       'label' => t('Recline.js visualization'),
-      'field types' => array('recline_field'),
+      'field types' => array('recline_field', 'file'),
       // TODO: add some settings.
       'settings' => array(),
     ),
@@ -273,11 +273,15 @@ function theme_recline_default_formatter($variables) {
 
   $icon = '';
 
+  $format = recline_get_data_type($file['filemime']);
+
   // Set options as per anchor format described at
   // http://microformats.org/wiki/file-format-examples
   $options = array(
     'attributes' => array(
       'type' => $file['filemime'] . '; length=' . $file['filesize'],
+      'data-format' => $format,
+      'class' => array('format-label'),
     ),
   );
 
@@ -347,7 +351,7 @@ function theme_recline_default_formatter($variables) {
     drupal_add_js('L.Icon.Default.imagePath = "/' . $leaflet_imgs . '"', 'inline');
   }
 
-  $file = l(t('Download'), $url, $options);
+  $file = l($file['filename'], $url, $options);
   return '<div class="download">' . $file . '</div><span class="data-explorer"></span>';
 }
 

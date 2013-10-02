@@ -4,11 +4,13 @@ api = 2
 ; DKAN
 projects[dkan_dataset][subdir] = dkan
 projects[dkan_dataset][download][type] = git
+projects[dkan_dataset][download][tag] = 7.x-1.0-beta2
 projects[dkan_dataset][download][url] = "http://git.drupal.org/project/dkan_dataset.git"
 projects[dkan_dataset][type] = "module"
 
 projects[dkan_datastore][subdir] = dkan
 projects[dkan_datastore][download][type] = git
+projects[dkan_datastore][download][tag] = 7.x-1.0-beta1
 projects[dkan_datastore][download][url] = "http://git.drupal.org/project/dkan_datastore.git"
 projects[dkan_datastore][type] = "module"
 
@@ -29,7 +31,7 @@ projects[gravatar][version] = 1.x
 projects[gravatar][patch][1568162] = http://drupal.org/files/views-display-user-picture-doesn-t-display-gravatar-1568162-10.patch
 projects[markdowneditor][subdir] = contrib
 projects[markdowneditor][version] = 1.x
-projects[markdowneditor][patch][2045225] = http://drupal.org/files/remove-dsm-from-hook-install.patch
+projects[markdowneditor][patch][2045225] = http://drupal.org/files/remove-dsm-from-hook-install-2045225-1.patch
 projects[markdown][subdir] = contrib
 projects[pathauto][subdir] = contrib
 projects[r4032login][subdir] = contrib

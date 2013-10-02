@@ -20,8 +20,10 @@ preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests), but please respect the 
 following restrictions:
 
-* Please **do not** use the issue tracker for personal support requests (use
-  [Stack Overflow](http://stackoverflow.com)).
+* Support issues or usage question that are not bugs should be posted on 
+[Stack Overflow, using the `chosen.js`](http://stackoverflow.com/questions/tagged/chosen.js) tag
+(related tags: [`jquery-chosen`](http://stackoverflow.com/questions/tagged/jquery-chosen),
+[`prototype-chosen`](http://stackoverflow.com/questions/tagged/prototype-chosen)).
 
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
@@ -70,6 +72,9 @@ Example:
 > causing the bug, and potential solutions (and your opinions on their
 > merits).
 
+**Note:** In an effort to keep open issues to a manageable number, we will close any issues
+that do not provide enough information for us to be able to work on a solution.
+You will be encouraged to provide the necessary details, after which we will reopen the issue.
 
 <a name="features"></a>
 ## Feature requests
@@ -172,13 +177,10 @@ license your work under the [MIT License](http://en.wikipedia.org/wiki/MIT_Licen
 <a name="grunt"></a>
 #### Using CoffeeScript and Grunt
 
-First, make sure you have the proper CoffeeScript / Grunt setup in place. We have added a package.json that makes this easy:
 
-```
-npm install
-```
+To install all development dependencies, in the project's root directory, run
 
-This will install all the necessary Grunt plugins
+    npm install && gem install bundler && bundle install
 
 Once you're configured, building the JavaScript from the command line is easy:
 
