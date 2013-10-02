@@ -1062,9 +1062,33 @@ label.for=["edit-field-upload-und-0"] {
 .group-data .field-group-htab {
   padding: 0;
 }
+.node-resource-form div.filefield-source input.form-text, div.filefield-source select.form-select,
+.node-resource-form .group-link-file input,
 .group-data input {
   width: 100%;
-  height: 45px;
+  height: 53px;
+  border: 0;
+  padding: 0;
+  padding: 0 0 0 12px;
+}
+.node-resource-form .group-link-file .form-managed-file .file {
+  margin: 17px 0 0 10px;
+  display: inline-block;
+}
+.node-resource-form .group-link-file .form-managed-file {
+  height: 53px;
+  border: 1px solid #ccc;
+  padding: 0px;
+  border-radius: 3px;
+}
+.node-resource-form .group-link-file input[type="submit"] {
+  width: auto;
+  font-size: .9em;
+  height: 25px;
+  float: right;
+  position: absolute;
+  right: 15px;
+  top: 50px;
 }
 #edit-field-upload-und-0-ajax-wrapper label {
   text-align: left;
@@ -1075,7 +1099,6 @@ label.for=["edit-field-upload-und-0"] {
   margin: 5px 0;
   font-size: 13px;
 }
-.node field-type-recline-field,
 .node-resource-form #edit-field-upload {
   font-size: 12px;
   padding: 12px;
@@ -1143,7 +1166,7 @@ body .node-resource-form input.autocomplete-deluxe-form,
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
 }
 
-.field-type-recline-field fieldset-wrapper,
+#edit-field-upload,
 input#edit-field-link-api-und-0-url,
 .node-resource-form textarea,
 .node-resource-form input,
@@ -1237,11 +1260,7 @@ input#edit-field-link-api-und-0-url,
   text-align: right;
   width: 110px;
 }
-.group-upload > .fieldset-wrapper {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-}
+.field-name-field-format,
 #dataset-node-form #edit-field-tags-und-term-entry {
   font-size: 16px;
   padding: 4px;
@@ -1249,7 +1268,7 @@ input#edit-field-link-api-und-0-url,
 }
 .field-name-field-format label,
 #edit-field-tags-und label {
-   margin-top: 20px;
+ margin-top: 20px;
 }
 .field-name-field-license-und-select {
   padding: 0 5px;
@@ -1521,7 +1540,8 @@ html.js input.throbbing {
   position: relative;
 }
 /** TODO: Fix: http://drupal.stackexchange.com/a/18995/1975 **/
-.field-name-body .filter-wrapper {
+#resource-node-form .field-name-body .filter-wrapper,
+#dataset-node-form .field-name-body .filter-wrapper {
   display: none;
 }
 #body-add-more-wrapper {
@@ -2161,11 +2181,6 @@ ul.resource-list li {
   left: 0;
 }
 .format-label {
-  width: 32px;
-  height: 35px;
-  background-position: 0px -62px;
-}
-.format-label {
   display: inline-block;
   vertical-align: text-bottom;
   position: relative;
@@ -2177,6 +2192,18 @@ ul.resource-list li {
   background-position: 16px 16px;
   text-indent: -900em;
   background: url("../images/sprite-resource-icons.png") no-repeat 0 0;
+}
+.download a.format-label {
+  text-indent: 40px;
+  margin-bottom: 20px;
+  padding-top: 8px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.format-label {
+  width: 32px;
+  height: 35px;
+  background-position: 0px -62px;
 }
 .node-dataset .field-name-field-tags {
   margin: 0;
@@ -3309,4 +3336,8 @@ article.node-teaser .data-and-resources .label {
 }
 .node-links ul li a, .comment-links ul li a {
   float: right;
+}
+.count-resource {
+  font-weight: bold;
+  padding: 0 5px 0 0;
 }

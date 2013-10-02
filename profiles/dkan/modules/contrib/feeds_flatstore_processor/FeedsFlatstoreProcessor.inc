@@ -43,23 +43,18 @@ class FeedsFlatstoreProcessor extends FeedsProcessor {
 
     $table = $this->table($source, $parser_result);
 
+    $reserved = feeds_flatstore_reserved_words();
     while ($data = $parser_result->shiftItem()) {
-      $total = NULL;
       foreach ($data as $label => $value) {
-        $total += $value;
+        $cleaned_data[feeds_flatstore_processor_safe_name($label)] = $value;
       }
-      if ($total) {
-        foreach ($data as $label => $value) {
-          $cleaned_data[feeds_flatstore_processor_safe_name($label)] = $value;
-        }
-        $cleaned_data['feeds_entity_id'] = $this->feed_nid;
-        if (!isset($cleaned_data['timestamp'])) {
-          $cleaned_data['timestamp'] = FEEDS_REQUEST_TIME;
-        }
+      $cleaned_data['feeds_entity_id'] = $this->feed_nid;
+      if (!isset($cleaned_data['timestamp'])) {
+        $cleaned_data['timestamp'] = FEEDS_REQUEST_TIME;
+      }
 
-        // We only save, never update, since there is only a flat table.
-        $this->handler($source)->save($cleaned_data);
-      }
+      // We only save, never update, since there is only a flat table.
+      $this->handler($source)->save($cleaned_data);
     }
 
   }

@@ -160,8 +160,9 @@ function dkan_datastore_api_services_resources() {
 }
 
 /**
- * Creates index based off of query. For arguments, see:
- * dkan_datastore_api_services_resources().
+ * Creates index based off of query.
+ *
+ * For arguments, see: dkan_datastore_api_services_resources().
  */
 function _dkan_datastore_api_datastore_index($resource_ids, $filters, $query, $offset, $limit, $fields, $sort, $join) {
   try {
@@ -292,7 +293,7 @@ function dkan_datastore_api_build_index_query($table, $offset, $limit, $fields, 
  * Same as services version but not adding conditions.
  */
 function dkan_datastore_api_resource_build_index_query(&$query, $page, $fields, $page_size, $alias, $table) {
-  $default_limit = variable_get("dkan_index_page_size", 100);
+  $default_limit = variable_get("{$table}_index_page_size", 20);
   if ((!user_access('perform unlimited index queries') && $page_size > $default_limit) || !$page_size) {
     $page_size = $default_limit;
   }
@@ -331,7 +332,8 @@ function dkan_datastore_api_resource_build_index_list($results, $table, $fields,
   $return = new stdClass();
   if ($fields == '*') {
     foreach ($schema['fields'] as $name => $field) {
-      if ($name != 'id' && $name != 'timestamp' && $name != 'feeds_entity_id') {
+      // Don't include fields added by feeds_flatstore_processor.
+      if ($name != 'feeds_flatstore_entry_id' && $name != 'timestamp' && $name != 'feeds_entity_id') {
         $return->fields[] = array('id' => $name, 'type' => $field['type']);
       }
     }
@@ -346,7 +348,7 @@ function dkan_datastore_api_resource_build_index_list($results, $table, $fields,
   }
   $return->resource_id = $resource_ids;
   $return->limit = $count['limit'];
-  $return->total = db_query("SELECT id from {$table}")->rowCount();
+  $return->total = db_query("SELECT feeds_flatstore_entry_id from {$table}")->rowCount();
   $return->records = $items;
 
   return $help + $success + array('result' => $return);

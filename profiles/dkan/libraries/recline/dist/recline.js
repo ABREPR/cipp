@@ -1364,12 +1364,11 @@ my.Flot = Backbone.View.extend({
     // * The relevant div that graph attaches to his hidden at the moment of creating the plot -- Flot will complain with
     //   Uncaught Invalid dimensions for plot, width = 0, height = 0
     // * There is no data for the plot -- either same error or may have issues later with errors like 'non-existent node-value'
-    var areWeVisible = !$.expr.filters.hidden(this.el);
+    var areWeVisible = !jQuery.expr.filters.hidden(this.el);
     if ((!areWeVisible || this.model.records.length === 0)) {
       this.needToRedraw = true;
       return;
     }
-    console.log(this);
 
     // check we have something to plot
     if (this.state.get('group') && this.state.get('series')) {

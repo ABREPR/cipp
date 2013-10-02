@@ -569,7 +569,7 @@ function _rdfui_mapping_save($form_state, $entity_type, $bundle, $field_name) {
   if (isset($form_state['values']['rdf_title_type']) || $field_name != 'title') {
     $form_state['values']['rdf_'. $field_name .'_predicates'] = rdfui_extract_curies($form_state['values']['rdf_'. $field_name .'_predicates']);
   }
-
+  
   foreach (array('type', 'datatype', 'predicates') as $key) {
     // If there is form input for this key, set it in the mapping.
     if (!empty($form_state['values']['rdf_'. $field_name .'_' . $key])) {

@@ -59,15 +59,17 @@ function theme_dkan_dataset_resource_view($vars) {
 
   if (isset($nodes)) {
     foreach ($nodes as $node) {
-      if (isset($node->body) && $node->body && isset($node->body[DKAN_FIELD_LANG])) {
-        $desc = '<p class="description">' . dkan_dataset_text_trim($node->body[DKAN_FIELD_LANG][0]['safe_value'], 80) . '</p>';
+      $node_wrapper = entity_metadata_wrapper('node', $node);
+      $body = $node_wrapper->body->value();
+      $term = '';
+      if (isset($body['safe_value'])) {
+        $desc = '<p class="description">' . dkan_dataset_text_trim($body['safe_value'], 80) . '</p>';
       }
       else {
         $desc = '<p class="description"></p>';
       }
       if (isset($node->field_format) && $node->field_format) {
-        $term = taxonomy_term_load($node->field_format[DKAN_FIELD_LANG][0]['tid']);
-        $term = '<span class="format-label" property="dc:format" data-format="' . $term->name . '">' . $term->name  . '</span>';
+        $term .= '<span class="format-label" property="dc:format" data-format="' . $node_wrapper->field_format->value()->name . '">' . $node_wrapper->field_format->value()->name  . '</span>';
       }
       else {
         $term = '<span class="format-label" property="dc:format" data-format="data">Data</span>';
