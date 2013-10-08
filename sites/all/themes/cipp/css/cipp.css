@@ -217,4 +217,8 @@ li.service-links-twitter-widget { width: 90px; }
   td { display: block; }
   .container-12 .grid-12 { min-width: inherit; }
   #superfish-1-select { width: 100%; padding: 0 0 0 10px; }
-  #zone-menu-wrapper { background-color: black; } }
+  #zone-menu-wrapper { background-color: black; }
+  .block .item-list li > a, .block .item-list li div > a { position: relative; margin: 0px 0px 15px 0; }
+  .resource-list li .format-label { display: none; }
+  #zone-content .block-inner:first-child { padding: 0; }
+  #actions { float: none; } }

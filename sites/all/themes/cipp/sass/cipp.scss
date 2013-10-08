@@ -810,4 +810,18 @@ li.service-links-twitter-widget {
   #zone-menu-wrapper {
     background-color: black;
   }
+  .block .item-list li > a,
+  .block .item-list li div > a {
+    position: relative;
+    margin: 0px 0px 15px 0;
+  }
+  .resource-list li .format-label {
+    display: none;
+  }
+  #zone-content .block-inner:first-child {
+    padding: 0;
+  }
+  #actions {
+    float: none;
+  }
 }
