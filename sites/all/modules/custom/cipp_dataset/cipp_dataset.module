@@ -14,6 +14,20 @@ function cipp_dataset_form_resource_node_form_alter(&$form, $form_state, $form_i
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function cipp_dataset_form_alter(&$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'views_exposed_form':
+      if ($form['#id'] == 'views-exposed-form-dataset-page') {
+        unset($form['submit']['#src']);
+        $form['submit']['#type'] = 'submit';
+      }
+  }
+}
+
+
+/**
  * Implements hook_module_implements_alter().
  */
 function cipp_dataset_module_implements_alter(&$implementations, $hook) {
