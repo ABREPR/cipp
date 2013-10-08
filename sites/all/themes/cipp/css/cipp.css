@@ -221,4 +221,5 @@ li.service-links-twitter-widget { width: 90px; }
   .block .item-list li > a, .block .item-list li div > a { position: relative; margin: 0px 0px 15px 0; }
   .resource-list li .format-label { display: none; }
   #zone-content .block-inner:first-child { padding: 0; }
-  #actions { float: none; } }
+  #actions { float: none; }
+  #block-block-3 .content h2 { font-size: 35px; } }
