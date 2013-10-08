@@ -792,3 +792,22 @@ li.service-links-twitter-widget {
   font-weight: bold;
   padding: 0 5px 0 0;
 }
+@media only screen and (max-width: 600px) {
+  table {
+    width: auto;
+    margin: auto;
+  }
+  td {
+    display: block;
+  }
+  .container-12 .grid-12 {
+    min-width: inherit;
+  }
+  #superfish-1-select {
+    width: 100%;
+    padding: 0 0 0 10px;
+  }
+  #zone-menu-wrapper {
+    background-color: black;
+  }
+}
