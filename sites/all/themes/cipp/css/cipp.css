@@ -28,7 +28,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 
 .front #section-header { z-index: 5; }
 
-.front #section-content { margin-top: -35px; z-index: 1; }
+.front #section-content { z-index: 1; }
 
 #section-footer:after, #section-footer:before, #zone-menu-wrapper:after, #zone-menu-wrapper:before, .zone-postscript-wrapper:before, .zone-postscript-wrapper:after, .zone-preface-wrapper:before, .zone-preface-wrapper:after { border: none !important; height: 0 !important; background: transparent; }
 
@@ -54,7 +54,7 @@ p { font-family: "Open Sans", "Trebuchet MS", "Helvetica Neue", Arial, Helvetica
 #superfish-1-select { background: #000; border: none; color: #fff; height: 32px; margin: 0 auto; display: block; }
 #superfish-1-select option { padding: 2px; }
 
-#block-block-1 { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); margin-top: 30px; }
+#block-block-1 { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); }
 #block-block-1 .block-inner { padding: 20px 25px; }
 #block-block-1 .block-inner a { float: right; font-weight: bold; }
 #block-block-1 h2.block-title { background: transparent; border: none; padding: 7px 0; filter: none; }
@@ -211,15 +211,21 @@ li.service-links-twitter-widget { width: 90px; }
 
 #field-tags-wrapper { display: block; clear: both; }
 
+.front #region-preface-second { height: auto; }
+
+.front #zone-preface .region { margin-bottom: 80px; margin-top: 20px; }
+
 .count-resource { font-weight: bold; padding: 0 5px 0 0; }
+
+.view-faq h2 { padding: 10px; }
 
 @media only screen and (max-width: 600px) { table { width: auto; margin: auto; }
   td { display: block; }
   .container-12 .grid-12 { min-width: inherit; }
-  #superfish-1-select { width: 100%; padding: 0 0 0 10px; }
+  #superfish-1-select { width: 100%; padding: 5px 0 0 10px; }
   #zone-menu-wrapper { background-color: black; }
   .block .item-list li > a, .block .item-list li div > a { position: relative; margin: 0px 0px 15px 0; }
   .resource-list li .format-label { display: none; }
   #zone-content .block-inner:first-child { padding: 0; }
   #actions { float: none; }
-  #block-block-3 .content h2 { font-size: 35px; } }
+  #block-block-3 .content h2 { font-size: 35px; line-height: 45px; padding-top: 5px; } }
