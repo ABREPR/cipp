@@ -62,7 +62,6 @@ p {
 	z-index:5;
 }
 .front #section-content {
-	margin-top:-35px;
 	z-index:1;
 }
 #section-footer:after, #section-footer:before,
@@ -178,7 +177,6 @@ p {
     background-color: white;
     @include border-radius(3px);
     @include box-shadow(0 0 3px rgba(0,0,0,0.3));
-    margin-top: 30px;
     .block-inner {
     	padding: 20px 25px;
     	a {
@@ -788,9 +786,19 @@ li.service-links-twitter-widget {
   display: block;
   clear: both;
 }
+.front #region-preface-second {
+  height: auto;
+}
+.front #zone-preface .region {
+  margin-bottom: 80px;
+  margin-top: 20px;
+}
 .count-resource {
   font-weight: bold;
   padding: 0 5px 0 0;
+}
+.view-faq h2 {
+  padding: 10px;
 }
 @media only screen and (max-width: 600px) {
   table {
@@ -805,7 +813,7 @@ li.service-links-twitter-widget {
   }
   #superfish-1-select {
     width: 100%;
-    padding: 0 0 0 10px;
+    padding: 5px 0 0 10px;
   }
   #zone-menu-wrapper {
     background-color: black;
@@ -826,5 +834,7 @@ li.service-links-twitter-widget {
   }
   #block-block-3 .content h2 {
     font-size: 35px;
+    line-height: 45px;
+    padding-top: 5px;
   }
 }
