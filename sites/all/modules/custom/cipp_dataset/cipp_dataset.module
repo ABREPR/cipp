@@ -20,7 +20,7 @@ function cipp_dataset_form_alter(&$form, $form_state, $form_id) {
   switch ($form_id) {
     case 'views_exposed_form':
       if ($form['#id'] == 'views-exposed-form-dataset-page') {
-        if (arg(0) == 'node' && arg(1)) {
+        if ((arg(0) != 'node' && arg(0) != 'dataset') || (arg(0) == 'node' && arg(1))) {
           unset($form['submit']['#src']);
           $form['submit']['#type'] = 'submit';
         }
