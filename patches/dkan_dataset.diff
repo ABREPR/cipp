@@ -19,7 +19,6 @@ index a995db2..72c996d 100644
  
    Drupal.behaviors.dkanFormsSlugify = {
      attach: function (context, settings) {
-+      console.log(context);
        // Slugify!
        if ($('#edit-path-alias').val() != '') {
          $('#url-edit-preview').hide();

@@ -219,6 +219,15 @@ li.service-links-twitter-widget { width: 90px; }
 
 .view-faq h2 { padding: 10px; }
 
+#field-type-values select { border-radius: 4px; }
+#field-type-values label { text-align: left; }
+
+.page-node-add #field-type-values .field-label label { text-align: left; }
+
+#field-type-values .chzn-container { display: none !important; }
+
+.field-type-taxonomy-term-reference.field-name-field-type.field-widget-taxonomy-shs.form-wrapper { margin-left: 130px; }
+
 @media only screen and (max-width: 600px) { table { width: auto; margin: auto; }
   td { display: block; }
   .container-12 .grid-12 { min-width: inherit; }
