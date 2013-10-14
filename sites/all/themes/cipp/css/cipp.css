@@ -239,3 +239,6 @@ li.service-links-twitter-widget { width: 90px; }
   #zone-content .block-inner:first-child { padding: 0; }
   #actions { float: none; }
   #block-block-3 .content h2 { font-size: 35px; line-height: 45px; padding-top: 5px; } }
+.comment-links ul li a { float: left; }
+
+.comment .user-picture img { width: 100px; }
