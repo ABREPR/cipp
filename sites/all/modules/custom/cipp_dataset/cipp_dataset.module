@@ -6,6 +6,22 @@
  */
 
 /**
+ * Implements hook_init().
+ */
+function cipp_dataset_init() {
+  // Redirect taxonomy pages to the dataset search if they already have an
+  // alias.
+  // This is necessary since facet pretty paths only work if the taxonomy
+  // term path is taxonomy/term so this can't be done with pathauto.
+  if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+    if (drupal_get_path_alias() != current_path()) {
+      drupal_goto('dataset/' . drupal_get_path_alias());
+    }
+  }
+}
+
+
+/**
  * Implements hook_form_alter().
  */
 function cipp_dataset_form_resource_node_form_alter(&$form, $form_state, $form_id) {
