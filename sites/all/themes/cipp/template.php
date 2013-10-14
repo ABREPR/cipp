@@ -36,3 +36,20 @@ function cipp_form_alter(&$form, &$form_state, $form_id) {
       break;
   }
 }
+
+/**
+ * Implements theme_preprocess_zone().
+ */
+function cipp_preprocess_zone(&$vars) {
+  if ($vars['zone'] == 'preface' && drupal_is_front_page()) {
+    $fid = variable_get('cipp_front_header', '');
+    if ($fid) {
+      $file = file_load($fid);
+      $file_path = file_create_url($file->uri);
+    }
+    else {
+      $file_path = '/sites/all/themes/cipp/images/homepage.jpg';
+    }
+    $vars['attributes_array']['style'] = 'background-image: url(' . $file_path . ')';
+  }
+}

@@ -3,3 +3,49 @@
  * @file
  * Drupal needs this blank file.
  */
+
+/**
+ * Implements hook_menu().
+ */
+function cipp_blocks_menu() {
+  $items['admin/config/system/cipp'] = array(
+    'title' => t('CIPP Settings'),
+    'description' => t('CIPP specific settings'),
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('permission'),
+    'page arguments' => array('cipp_site_settings'),
+    'access arguments' => array('administer site configuration'),
+  );
+  return $items;
+}
+
+/**
+ * Menu Callback for CIPP settings.
+ */
+function cipp_site_settings() {
+  $form = array();
+  $fid = variable_get('cipp_front_header', 0);
+  $file = file_load($fid);
+  $form['cipp_front_header'] = array(
+    '#type' => 'managed_file',
+    '#title' => t('Homepage backround image'),
+    '#description' => empty($fid) ? t('Select a file from your local system.') : t('Select a different file from your local system.'),
+    '#default_value' => $fid,
+    '#upload_location' => 'public://user_header/',
+    '#size' => 10,
+  );
+  return system_settings_form($form);
+}
+function template_preprocess_podium_course_user_header(&$vars) {
+  $vars['user_header_title'] = variable_get('user_header_title', '');
+  $vars['user_header_sub_title'] = variable_get('user_header_sub_title', '');
+  $fid = variable_get('user_header_fid', '');
+  if ($fid) {
+    $file = file_load($fid);
+    $file_path = file_create_url($file->uri);
+  }
+  else {
+    $file_path = '';
+  }
+  $vars['user_header_back'] = $file_path;
+}
