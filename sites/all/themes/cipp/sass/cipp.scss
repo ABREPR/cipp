@@ -579,9 +579,9 @@ textarea:focus, input:focus {
         -moz-box-sizing: border-box;
         -ms-box-sizing: border-box;
         box-sizing: border-box;
-        width: 520px;
-        float: right;
+        width: 540px;
         margin-bottom: 8px;
+        margin-left: 9px;
         border: 1px solid #73BB6D;
       }
       label {
@@ -868,4 +868,34 @@ li.service-links-twitter-widget {
 }
 #zone-content .block-inner {
   padding: 0 25px 0 0;
+}
+#edit-field-related-content-und-0-title {
+  width: 250px;
+}
+.group-data .horizontal-tabs, #dataset-node-form .form-item-title input, .node-resource-form.form-item-title input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 540px;
+  float: left;
+}
+.node-resource-form input#edit-title, #dataset-node-form input#edit-title {
+  height: 55px;
+  width: 540px;
+}
+#edit-field-frequency {
+  clear: both;
+}
+.field-type-datetime.field-name-field-temporal-coverage .fieldset-wrapper, .field-type-geofield.field-name-field-spatial .fieldset-wrapper {
+  width: 540px;
+  float: right;
+}
+.stages {
+  margin: 0;
+  list-style: none;
+  color: #aeaeae;
+  counter-reset: stage;
+  margin: -20px 5px 20px;
+  overflow: hidden;
 }
