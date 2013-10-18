@@ -29,7 +29,7 @@ function dkan_breadcrumb($variables) {
     // Remove null values.
     $breadcrumb = array_filter($breadcrumb);;
     $i = 1;
-    foreach($breadcrumb as $value) {
+    foreach ($breadcrumb as $value) {
       if ($i == count($breadcrumb)) {
         $crumbs .= '<li class="active-trail">' . $value . '</li>';
       }
@@ -163,7 +163,7 @@ function dkan_preprocess_node(&$vars) {
  */
 function dkan_preprocess_page(&$vars) {
   $profile_path = drupal_get_path('profile', 'dkan');
-  // Add font-awesome. This is not a GPL library so has to be downloaded separately.
+  // Add font-awesome. This is not GPL so has to be downloaded separately.
   if (file_exists($profile_path . '/libraries/font_awesome/css/font-awesome.css')) {
     drupal_add_css($profile_path . '/libraries/font_awesome/css/font-awesome.css');
   }
@@ -174,15 +174,6 @@ function dkan_preprocess_page(&$vars) {
   if (!empty($vars['node']) && in_array($vars['node']->type, array('dataset', 'resource')) || arg(1) == 'add') {
     $vars['title'] = '';
   }
-}
-
-/**
- * Implments template_preprocess_block().
- * TODO: Move this to dkan_dataset module.
- */
-function dkan_preprocess_block(&$vars) {
-
-  $vars['title'] = '';
 }
 
 /**

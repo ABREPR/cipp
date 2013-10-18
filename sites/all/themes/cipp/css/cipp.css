@@ -242,3 +242,5 @@ li.service-links-twitter-widget { width: 90px; }
 .comment-links ul li a { float: left; }
 
 .comment .user-picture img { width: 100px; }
+
+#zone-content .block-inner { padding: 0 25px 0 0; }

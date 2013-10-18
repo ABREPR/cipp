@@ -44,7 +44,6 @@ function cipp_dataset_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
-
 /**
  * Implements hook_module_implements_alter().
  */

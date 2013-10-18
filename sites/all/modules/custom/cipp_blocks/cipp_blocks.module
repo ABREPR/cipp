@@ -36,6 +36,7 @@ function cipp_site_settings() {
   );
   return system_settings_form($form);
 }
+
 function template_preprocess_podium_course_user_header(&$vars) {
   $vars['user_header_title'] = variable_get('user_header_title', '');
   $vars['user_header_sub_title'] = variable_get('user_header_sub_title', '');
