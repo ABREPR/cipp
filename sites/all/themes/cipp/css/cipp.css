@@ -258,3 +258,9 @@ li.service-links-twitter-widget { width: 90px; }
 .stages { margin: 0; list-style: none; color: #aeaeae; counter-reset: stage; margin: -20px 5px 20px; overflow: hidden; }
 
 .filter-guidelines { display: none; }
+
+.button { padding: 5px; }
+
+.media-widget .preview .media-item { overflow: hidden; }
+
+.form-item .description { left: 145px; font-size: 15px; top: 30px; color: #999; }
