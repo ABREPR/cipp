@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Cipp Visualization feature.
+ */
+
+include_once 'cipp_visualization.features.inc';

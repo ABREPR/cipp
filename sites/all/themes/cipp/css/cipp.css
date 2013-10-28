@@ -256,3 +256,5 @@ li.service-links-twitter-widget { width: 90px; }
 .field-type-datetime.field-name-field-temporal-coverage .fieldset-wrapper, .field-type-geofield.field-name-field-spatial .fieldset-wrapper { width: 540px; float: right; }
 
 .stages { margin: 0; list-style: none; color: #aeaeae; counter-reset: stage; margin: -20px 5px 20px; overflow: hidden; }
+
+.filter-guidelines { display: none; }
