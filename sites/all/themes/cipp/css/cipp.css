@@ -264,3 +264,5 @@ li.service-links-twitter-widget { width: 90px; }
 .media-widget .preview .media-item { overflow: hidden; }
 
 .form-item .description { left: 145px; font-size: 15px; top: 30px; color: #999; }
+
+#mc_embed_signup .button { color: #333; border: 1px solid #CECECE; }
