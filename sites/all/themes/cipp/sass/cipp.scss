@@ -918,3 +918,9 @@ li.service-links-twitter-widget {
   color: #333 !important;
   border: 1px solid #CECECE !important;
 }
+.form-textarea-wrapper {
+  clear: both;
+}
+.cke_wysiwyg_frame html {
+  overflow: hidden;
+}
