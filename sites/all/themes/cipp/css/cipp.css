@@ -270,3 +270,7 @@ li.service-links-twitter-widget { width: 90px; }
 .form-textarea-wrapper { clear: both; }
 
 .cke_wysiwyg_frame html { overflow: hidden; }
+
+#region-preface-first { width: 100%; }
+
+.views-row { clear: both; }
