@@ -65,6 +65,10 @@ function dkan_sitewide_page_alter(&$page) {
     $breadcrumbs[] = drupal_get_title();
     drupal_set_breadcrumb($breadcrumbs);
   }
+  elseif ($node && $node->type == 'dataset') {
+    $breadcrumbs[] = drupal_get_title();
+    drupal_set_breadcrumb($breadcrumbs);
+  }
 }
 
 /**
