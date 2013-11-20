@@ -49,7 +49,6 @@ this.recline.Backend.Ckan = this.recline.Backend.Ckan || {};
     var jqxhr = wrapper.search({resource_id: dataset.id, limit: 0});
     jqxhr.done(function(results) {
       // map ckan types to our usual types ...
-      console.log(results);
       var fields = _.map(results.result.fields, function(field) {
         field.type = field.type in CKAN_TYPES_MAP ? CKAN_TYPES_MAP[field.type] : field.type;
         return field;
@@ -136,7 +135,6 @@ this.recline.Backend.Ckan = this.recline.Backend.Ckan || {};
       // This is the only difference between this and the ckan, it uses GET
       // instead of POST.
       var searchUrl = that.endpoint + '/3/action/datastore_search?=' + objToQuery(data);
-      console.log(searchUrl);
       var jqxhr = jQuery.ajax({
         url: searchUrl,
         type: 'GET',
