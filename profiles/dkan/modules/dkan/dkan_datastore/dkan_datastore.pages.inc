@@ -101,10 +101,11 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
   if ($importer_ids) {
     $form['#feed_nid'] = $node->nid;
     $form['#redirect'] = 'node/' . $node->nid;
-    $form = confirm_form($form, t('Import all content from source?'), 'node/' . $node->nid, '', t('Import'), t('Cancel'), 'confirm feeds update');
     foreach ($importer_ids as $importer_id => $weight) {
       $source = feeds_source($importer_id, $node->nid);
+      $importer = feeds_importer($importer_id, $node->nid);
       $source_input = isset($source->config[$source->importer->config['fetcher']['plugin_key']]['source']) ? $source->config[$source->importer->config['fetcher']['plugin_key']]['source'] : '';
+      $default_values = $source->config[$source->importer->config['parser']['plugin_key']];
       if ($source_input) {
         $form[$importer_id]['source_status'] = array(
           '#type' => 'fieldset',
@@ -112,6 +113,12 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
           '#tree' => TRUE,
           '#value' => feeds_source_status($source),
         );
+        $form[$importer_id]['settings'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Settings'),
+        );
+        $form[$importer_id]['settings'] = $source->configForm($form_state);
+        $form[$importer_id]['settings']['#submit'] = array('feeds_form_submit');
         $form[$importer_id]['#count'] = $source->itemCount();
         $progress = $source->progressImporting();
         $total_progress += $progress;
@@ -121,12 +128,14 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
       }
     }
     if (count($importer_ids) == 1) {
+      $form = confirm_form($form, t('Import all content from source?'), 'node/' . $node->nid, '', t('Import'), t('Cancel'), 'confirm feeds update');
       $form['importer_ids'] = array(
         '#type' => 'value',
         '#value' => $importer_ids,
       );
     }
-    else {
+    elseif ($importer_ids) {
+      $form = confirm_form($form, t('Import all content from source?'), 'node/' . $node->nid, '', t('Import'), t('Cancel'), 'confirm feeds update');
       $options = array();
       foreach ($importer_ids as $importer_id => $weight) {
         $source = feeds_source($importer_id, $node->nid);
@@ -140,7 +149,11 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
         '#description' => t('Select the sources to import.'),
       );
     }
-
+    else {
+      $form['no_source'] = array(
+        '#markup' => t('The file type for this resource is not supported by the datastore.'),
+      );
+    }
     if (count($importer_ids)) {
       $progress = $total_progress / count($importer_ids);
       if ($progress !== FEEDS_BATCH_COMPLETE) {
@@ -163,6 +176,10 @@ function dkan_datastore_import_tab_form($form, &$form_state, $node) {
 function dkan_datastore_import_tab_form_submit($form, &$form_state) {
   $form_state['redirect'] = $form['#redirect'];
   foreach (array_filter($form_state['values']['importer_ids']) as $importer_id) {
+    $source = feeds_source($importer_id, $form_state['build_info']['args'][0]->nid);
+    $parser = $source->importer->config['parser']['plugin_key'];
+    $source->addConfig(array($parser => $form_state['values'][$parser]));
+    $source->save();
     feeds_source($importer_id, $form['#feed_nid'])->startImport();
   }
 }
@@ -230,8 +247,7 @@ function dkan_datastore_delete_tab_form($form, &$form_state, $importer_id, $node
       $progress = $total_progress / count($importer_ids);
       if ($progress !== FEEDS_BATCH_COMPLETE) {
         $form['actions']['submit']['#disabled'] = TRUE;
-        $form['actions']['submit']['#value'] =
-          t('Deleting (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
+        $form['actions']['submit']['#value'] = t('Deleting (@progress %)', array('@progress' => number_format(100 * $progress, 0)));
       }
     }
   }
@@ -287,4 +303,60 @@ function dkan_datastore_unlock_tab_form($form, &$form_state, $importer_id, $node
   }
   $form['#submit'] = array('feeds_unlock_tab_form_submit');
   return $form;
+}
+
+/*
+* Render a datastore drop form on node/id/drop pages
+*/
+function dkan_datastore_drop_tab_form($form, &$form_state, $node) {
+  module_load_include('module', 'data', 'data');
+  module_load_include('inc', 'feeds', 'feeds.pages');
+  $form['#redirect'] = 'node/' . $node->nid;
+  $form = confirm_form($form, t('Drop this datastore?'), $form['#redirect'], '', t('Drop'), t('Cancel'), 'confirm drop');
+  
+  $importer_ids = feeds_get_importer_ids($node->type);
+  $tables_to_drop = array();
+
+  foreach ($importer_ids as $importer_id) {
+    $source = feeds_source($importer_id, $node->nid);
+    $table_name = feeds_flatstore_processor_table_name($source->id, $source->feed_nid);
+    $table = data_get_table($table_name);
+    if($table){
+      array_push($tables_to_drop, $table_name);
+    }
+  }
+
+  if (!count($tables_to_drop)){
+    $form['tables_absent'] = array(
+      '#type' => 'markup',
+      '#title' => t('Can\'t drop table'),
+      '#tree' => TRUE,
+      '#markup' => t('You need to have a file or link imported to the datastore in order to drop it.'),
+    );
+    $form['actions']['submit']['#disabled'] = TRUE;
+    $form['actions']['submit']['#value'] = t('Drop (disabled)');
+  }else{
+    $form['tables_present'] = array(
+      '#type' => 'markup',
+      '#title' => t('Drop tables'),
+      '#tree' => TRUE,
+      '#markup' => t('Are you sure you want to drop the datastore?'),
+    );
+    $form['#tables_to_drop'] = $tables_to_drop;
+    $form['actions']['submit']['#value'] = t('Drop');
+  }
+  return $form;
+}
+
+/**
+ * Submit function for drop tab.
+ */
+function dkan_datastore_drop_tab_form_submit($form, &$form_state) {
+  module_load_include('module', 'data', 'data');
+  foreach($form['#tables_to_drop'] as $table_name){
+    $table = data_get_table($table_name);
+    $table->drop();
+  }
+  drupal_set_message(t('Datastore dropped!'));
+  $form_state['redirect'] = $form['#redirect'];
 }

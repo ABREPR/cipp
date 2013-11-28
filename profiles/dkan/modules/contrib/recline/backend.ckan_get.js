@@ -106,7 +106,7 @@ this.recline.Backend.Ckan = this.recline.Backend.Ckan || {};
         total: results.result.total,
         hits: results.result.records
       };
-      dfd.resolve(out);  
+      dfd.resolve(out);
     });
     return dfd.promise();
   };
@@ -116,7 +116,7 @@ this.recline.Backend.Ckan = this.recline.Backend.Ckan || {};
   // Simple wrapper around the CKAN DataStore API
   //
   // @param endpoint: CKAN api endpoint (e.g. http://datahub.io/api)
-  my.DataStore = function(endpoint) { 
+  my.DataStore = function(endpoint) {
     var that = {endpoint: endpoint || my.API_ENDPOINT};
 
     function objToQuery(obj) {
@@ -134,7 +134,15 @@ this.recline.Backend.Ckan = this.recline.Backend.Ckan || {};
     that.search = function(data) {
       // This is the only difference between this and the ckan, it uses GET
       // instead of POST.
-      var searchUrl = that.endpoint + '/3/action/datastore_search?=' + objToQuery(data);
+      var filters = "";
+      if (data.filters) {
+        for (var filter in data.filters) {
+          filters = "&filters[" + filter + "]=" + data.filters[filter];
+          console.log(filters);
+        }
+      }
+      var searchUrl = that.endpoint + '/3/action/datastore_search?=' + objToQuery(data) + filters;
+      console.log(searchUrl);
       var jqxhr = jQuery.ajax({
         url: searchUrl,
         type: 'GET',
