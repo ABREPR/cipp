@@ -5,3 +5,12 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 .sass-cache
+
+
+
+favicon.ico
+hosting_logo.png
+index_old.php
+robots_original.txt
+sites/default.tar.gz
+verify.txt
