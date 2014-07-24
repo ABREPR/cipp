@@ -7,7 +7,6 @@ sites/*/private
 .sass-cache
 
 
-cipp/
 favicon.ico
 hosting_logo.png
 index_old.php
